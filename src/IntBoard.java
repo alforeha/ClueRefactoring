@@ -3,10 +3,12 @@ import java.util.LinkedList;
 import java.util.Set;
 
 // Contains the grid and adjacency lists
+// DON'T CHANGE THIS UNTIL TOMORROW
 public class IntBoard {
 
 	private Set<BoardCell> targets = new HashSet<BoardCell>(); // Set of potential targets to move to
 	private LinkedList<BoardCell> adjList = new LinkedList<BoardCell>();	// List of adjacent cells
+	private BoardCell[][] grid = null;
 
 	// Calculates the adjacency list for each grid cell, stores in a map
 	private void calcAdjacencies() {
