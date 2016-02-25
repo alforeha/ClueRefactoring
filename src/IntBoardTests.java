@@ -1,17 +1,19 @@
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class IntBoardTests {
-
-	// THIS CLASS MUST WORK IN PART II WITH A 4X4 GAME BOARD, NOT THE MATRIX WE MADE
 	
-	// TODO: Determine where the @before is supposed to go
+	// THIS CLASS MUST WORK IN PART II WITH A 4X4 GAME BOARD, NOT THE MATRIX WE MADE
+	IntBoard board = null;
 	@Before
-	IntBoard board = new IntBoard(4,4);
+	public void initialization(){
+		board = new IntBoard(4,4);
+	}
 	
 	@Test
 	public void testTLCorner(){
@@ -86,33 +88,20 @@ public class IntBoardTests {
 	}
 
 	@Test
-	public void pathCreation1(){
-		// TODO: test path creation
-	}
-
-	@Test
-	public void pathCreation2(){
-		// TODO: test path creation
-	}
-
-	@Test
-	public void pathCreation3(){
-		// TODO: test path creation
-	}
-
-	@Test
-	public void pathCreation4(){
-		// TODO: test path creation
-	}
-
-	@Test
-	public void pathCreation5(){
-		// TODO: test path creation
-	}
-
-	@Test
-	public void pathCreation6(){
-		// TODO: test path creation
+	public void pathCreation(){
+		BoardCell cell = board.getCell(3, 3);
+		board.calcTargets(cell,3);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(3, 0)));
+		assertTrue(targets.contains(board.getCell(0, 3)));
+		assertTrue(targets.contains(board.getCell(2, 1)));
+		assertTrue(targets.contains(board.getCell(1, 2)));
+		assertTrue(targets.contains(board.getCell(3, 2)));
+		assertTrue(targets.contains(board.getCell(2, 3)));
+		
+		// Tests if the bottom right corner has exactly 6 possible destinations
+		// and that they are the correct ones
 	}
 	
 }

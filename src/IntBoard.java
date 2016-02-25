@@ -11,12 +11,12 @@ public class IntBoard {
 	private BoardCell[][] grid = null;
 
 	// Calculates the adjacency list for each grid cell, stores in a map
-	private void calcAdjacencies() {
+	public void calcAdjacencies() {
 		// TODO: actually find the list of adjacent cells IN PART II
 	}	
 
 	// Calculates the targets that are pathLength away from the startCell, stores in local variable
-	private void calcTargets(BoardCell startCell, int pathLength) {
+	public void calcTargets(BoardCell startCell, int pathLength) {
 		// TODO: actually find the target cells IN PART II
 	}	
 
