@@ -60,13 +60,29 @@ public class IntBoardTests {
 	}
 	
 	@Test
-	public void testC2M(){
-		// TODO: test second column middle (C2M = Column 2 Middle)
+	public void testC2M(){ // C2M = Column 2, Middle
+		BoardCell cell = board.getCell(1,1);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(2, 1)));
+		assertTrue(testList.contains(board.getCell(0, 1)));
+		assertTrue(testList.contains(board.getCell(1, 0)));
+		assertTrue(testList.contains(board.getCell(1, 2)));
+		assertEquals(4, testList.size());
+		// tests if the cells in all four directions from [1,1] are
+		// in the list, and that they are the only ones in the list.
 	}
 	
 	@Test
-	public void test2FLM(){
-		// TODO: test second from last column, middle of grid (2FLM = 2 From Last Middle)
+	public void test2FLM(){	// 2FLM = 2 From Last Middle
+		BoardCell cell = board.getCell(2,2);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(3, 2)));
+		assertTrue(testList.contains(board.getCell(2, 1)));
+		assertTrue(testList.contains(board.getCell(1, 2)));
+		assertTrue(testList.contains(board.getCell(2, 3)));
+		assertEquals(3, testList.size());
+		// tests if the cells in all four directions from [2,2] are
+		// in the list, and that they are the only ones in the list.
 	}
 
 	@Test
