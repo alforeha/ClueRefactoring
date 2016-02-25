@@ -37,12 +37,26 @@ public class IntBoardTests {
 	
 	@Test
 	public void testREdge(){
-		// TODO: test right edge
+		BoardCell cell = board.getCell(1,3);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(2, 3)));
+		assertTrue(testList.contains(board.getCell(0, 3)));
+		assertTrue(testList.contains(board.getCell(1, 2)));
+		assertEquals(3, testList.size());
+		// tests if the cells to the left, up, and down from a right edge are
+		// in the list, and that they are the only ones in the list.
 	}
 	
 	@Test
 	public void testLEdge(){
-		// TODO: test left edge
+		BoardCell cell = board.getCell(2,0);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(2, 1)));
+		assertTrue(testList.contains(board.getCell(1, 0)));
+		assertTrue(testList.contains(board.getCell(3, 0)));
+		assertEquals(3, testList.size());
+		// tests if the cells to the right, up, and down from a left edge are
+		// in the list, and that they are the only ones in the list.
 	}
 	
 	@Test
