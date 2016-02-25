@@ -1,23 +1,38 @@
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class IntBoardTests {
 
-	// THIS CLASS MUST WORK WITH A 4X4 GAME BOARD, NOT THE MATRIX WE MADE
+	// THIS CLASS MUST WORK IN PART II WITH A 4X4 GAME BOARD, NOT THE MATRIX WE MADE
 	
+	// TODO: Determine where the @before is supposed to go
 	@Before
-	// TODO: No idea what needs to go here, but we need to "set up your IntBoard"
+	IntBoard board = new IntBoard(4,4);
 	
 	@Test
 	public void testTLCorner(){
-		// TODO: test top left corner
+		BoardCell cell = board.getCell(0,0);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(1, 0)));
+		assertTrue(testList.contains(board.getCell(0, 1)));
+		assertEquals(2, testList.size());
+		// tests if the cell to the right and the one directly down from the TL corner are
+		// in the list, and that they are the only two in the list.
 	}
 	
 	@Test
 	public void testBRCorner(){
-		// TODO: test bottom right corner
+		BoardCell cell = board.getCell(3,3);
+		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(2, 3)));
+		assertTrue(testList.contains(board.getCell(3, 2)));
+		assertEquals(2, testList.size());
+		// tests if the cell to the left and the one directly up from the BR corner are
+		// in the list, and that they are the only two in the list.
 	}
 	
 	@Test

@@ -30,7 +30,12 @@ public class IntBoard {
 		// TODO: make this work IN PART II
 	}
 
-	public LinkedList<BoardCell> getAdjList() {
+	public LinkedList<BoardCell> getAdjList(BoardCell cell) {
+		return null;
+		// TODO: make this work IN PART II
+	}
+	
+	public BoardCell getCell(int row, int col){
 		return null;
 		// TODO: make this work IN PART II
 	}
