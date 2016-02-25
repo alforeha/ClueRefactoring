@@ -1,0 +1,9 @@
+B bathroom
+K Kitchen
+H Hallway
+L Lounge
+P Patio
+D Dining Room
+O Observatory
+M Master bedroom
+C Cleaning room
