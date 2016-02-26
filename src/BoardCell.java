@@ -10,4 +10,9 @@ public class BoardCell {
 		this.y = y;		
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "BoardCell [x=" + x + ", y=" + y + ", type=" + type + "]";
+	}
 }

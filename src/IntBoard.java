@@ -1,5 +1,9 @@
+import static org.junit.Assert.assertEquals;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
@@ -12,26 +16,45 @@ import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 // DON'T CHANGE THIS UNTIL TOMORROW
 public class IntBoard {
 
-	private Set<BoardCell> targets = new HashSet<BoardCell>(); // Set of potential targets to move to
+
 	private LinkedList<BoardCell> adjList = new LinkedList<BoardCell>();	// List of adjacent cells
 	private BoardCell[][] grid = null;
-	private Map<BoardCell, BoardCell> adjacencies = null; 
+	private Map<BoardCell, ArrayList<BoardCell>> adjacencies = null;	
 
 	// Calculates the adjacency list for each grid cell, stores in a map
 	public void calcAdjacencies() {
-		//adjacencies.put(new BoardCell(), new BoardCell());
+		adjacencies = new HashMap<BoardCell, ArrayList<BoardCell>>(grid.length, grid[0].length);
+		for (int x=0; x<grid.length; x++) {
+			for (int y=0; y < grid[x].length; y++) {
+				ArrayList<BoardCell> al = new ArrayList<BoardCell>();
+				if (x - 1 >= 0) al.add(grid[x-1][y]);
+				if (y - 1 >= 0) al.add(grid[x][y-1]);
+				if (x + 1 < grid.length) al.add(grid[x+1][y]);
+				if (y + 1 < grid[x].length) al.add(grid[x][y+1]);
+				adjacencies.put(grid[x][y], al);				
+			}			
+		}		
 	}	
 
 	// Calculates the targets that are pathLength away from the startCell, stores in local variable
-	public void calcTargets(BoardCell startCell, int pathLength) {
-		// TODO: actually find the target cells IN PART II
-	}	
+	private void calcTargets(BoardCell startCell, int pathLength, Set<BoardCell> visited, Set<BoardCell> targetSet) {
+		Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);
+		myVisited.add(startCell);
+		if (pathLength == 0) { 
+			targetSet.add(startCell); return; 
+		}
+		for (BoardCell o: adjacencies.get(startCell)) {
+			if (!myVisited.contains(o)) {				
+				calcTargets(o, pathLength-1, myVisited, targetSet);
+			}
+		}
+	}
 
-	public IntBoard(int X, int Y) {
+	public IntBoard(int X, int Y, String filename) {
 		super();
 		grid = new BoardCell[X][Y];
 		try {
-			FileReader fin = new FileReader("Clue Layout.csv");
+			FileReader fin = new FileReader(filename);
 			Scanner in = new Scanner(fin);
 			String temp;
 			int x=0, y=0;
@@ -41,7 +64,7 @@ public class IntBoard {
 				line.useDelimiter(",");
 				while (line.hasNext()) {
 					String spot = line.next();
-					System.out.print(spot);
+					//System.out.print(spot);
 					//System.out.print("\t");
 					grid[y][x] = new BoardCell(x, y, spot);
 					x++;					
@@ -55,22 +78,27 @@ public class IntBoard {
 		}		
 	}
 
-	public Set<BoardCell> getTargets() {
-		return null;
-		// TODO: make this work IN PART II
+	public Set<BoardCell> getTargets(BoardCell startCell, int pathLength) {
+		Set<BoardCell> targetSet = new HashSet<BoardCell>(); // Set of potential targets to move to
+		Set<BoardCell> visited = new HashSet<BoardCell>(); 
+		calcTargets(startCell, pathLength, visited, targetSet);
+		return targetSet;
 	}
 
 	public LinkedList<BoardCell> getAdjList(BoardCell cell) {
-		return null;
-		// TODO: make this work IN PART II
+		return adjList;
 	}
-	
+
 	public BoardCell getCell(int row, int col){
-		return null;
-		// TODO: make this work IN PART II
+		return grid[row][col];
 	}
-	
+
 	public static void main(String[] args) {
-		IntBoard x = new IntBoard(26,13);
+		IntBoard x = new IntBoard(4,4, "Clue Layout2.csv");
+		x.calcAdjacencies();
+		//System.out.println(x.getTargets(x.getCell(0,0), 3));
+		BoardCell cell = x.getCell(3, 3);
+		Set<BoardCell> targets = x.getTargets(cell, 3);
+		System.out.println(targets);
 	}
 }
