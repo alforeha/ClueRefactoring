@@ -1,7 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.junit.Before;
@@ -19,10 +18,10 @@ public class IntBoardTests {
 	@Test
 	public void testTLCorner(){
 		BoardCell cell = board.getCell(0,0);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(1, 0)));
-		//assertTrue(testList.contains(board.getCell(0, 1)));
-		//assertEquals(2, testList.size());
+		assertTrue(testList.contains(board.getCell(0, 1)));
+		assertEquals(2, testList.size());
 		// tests if the cell to the right and the one directly down from the TL corner are
 		// in the list, and that they are the only two in the list.
 	}
@@ -30,7 +29,7 @@ public class IntBoardTests {
 	@Test
 	public void testBRCorner(){
 		BoardCell cell = board.getCell(3,3);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 3)));
 		assertTrue(testList.contains(board.getCell(3, 2)));
 		assertEquals(2, testList.size());
@@ -41,7 +40,7 @@ public class IntBoardTests {
 	@Test
 	public void testREdge(){
 		BoardCell cell = board.getCell(1,3);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 3)));
 		assertTrue(testList.contains(board.getCell(0, 3)));
 		assertTrue(testList.contains(board.getCell(1, 2)));
@@ -53,7 +52,7 @@ public class IntBoardTests {
 	@Test
 	public void testLEdge(){
 		BoardCell cell = board.getCell(2,0);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 1)));
 		assertTrue(testList.contains(board.getCell(1, 0)));
 		assertTrue(testList.contains(board.getCell(3, 0)));
@@ -65,7 +64,7 @@ public class IntBoardTests {
 	@Test
 	public void testC2M(){ // C2M = Column 2, Middle
 		BoardCell cell = board.getCell(1,1);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 1)));
 		assertTrue(testList.contains(board.getCell(0, 1)));
 		assertTrue(testList.contains(board.getCell(1, 0)));
@@ -78,12 +77,12 @@ public class IntBoardTests {
 	@Test
 	public void test2FLM(){	// 2FLM = 2 From Last Middle
 		BoardCell cell = board.getCell(2,2);
-		LinkedList<BoardCell> testList = board.getAdjList(cell);
+		ArrayList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(3, 2)));
 		assertTrue(testList.contains(board.getCell(2, 1)));
 		assertTrue(testList.contains(board.getCell(1, 2)));
 		assertTrue(testList.contains(board.getCell(2, 3)));
-		assertEquals(3, testList.size());
+		assertEquals(4, testList.size());
 		// tests if the cells in all four directions from [2,2] are
 		// in the list, and that they are the only ones in the list.
 	}
@@ -99,7 +98,6 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(1, 2)));
 		assertTrue(targets.contains(board.getCell(3, 2)));
 		assertTrue(targets.contains(board.getCell(2, 3)));
-		
 		// Tests if the bottom right corner has exactly 6 possible destinations
 		// and that they are the correct ones
 	}
