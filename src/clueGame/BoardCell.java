@@ -14,6 +14,12 @@ public class BoardCell {
 		this.type = type;
 	}
 
+	public BoardCell(int x2, int y2) {
+		x = x2;
+		y = y2;
+		type = "X";
+	}
+
 	@Override
 	public String toString() {
 		return "BoardCell [x=" + x + ", y=" + y + ", type=" + type + "]";
@@ -37,6 +43,22 @@ public class BoardCell {
 
 	public char getInitial() {
 		return initial;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public DoorDirection getDirection() {
+		return direction;
 	}
 	
 	

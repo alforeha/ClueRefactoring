@@ -6,15 +6,12 @@ import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
-import clueGame.ClueGame;
 import clueGame.DoorDirection;
 
 public class CR_FileInitTests {
