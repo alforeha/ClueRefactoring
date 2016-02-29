@@ -7,11 +7,33 @@ public class BoardCell {
 	private DoorDirection direction;
 	// TODO: I don't think anything more needs to be done to this for now
 
-	public BoardCell(int x, int y, String type) {
+	public BoardCell(int x, int y, char type, char direction) {
 		super();
 		this.x = x;
 		this.y = y;		
-		this.type = type;
+		initial = type;
+		switch (direction){
+		case 'U':
+			this.direction = DoorDirection.UP;
+			break;
+		
+		case 'D':
+			this.direction = DoorDirection.DOWN;
+			break;
+			
+		case 'L':
+			this.direction = DoorDirection.LEFT;
+			break;
+			
+		case 'R':
+			this.direction = DoorDirection.RIGHT;
+			break;
+			
+		default:
+			this.direction = DoorDirection.NONE;
+			break;
+		}
+		
 	}
 
 	public BoardCell(int x2, int y2) {

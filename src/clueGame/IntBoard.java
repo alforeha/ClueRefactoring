@@ -62,7 +62,8 @@ public class IntBoard {
 				line.useDelimiter(",");					// Separates it based on commas
 				while (line.hasNext()) {
 					String spot = line.next();			// Reads in each letter and...
-					grid[row][col] = new BoardCell(row, col, spot);	// puts it in the appropriate place on the grid
+					char initial = spot.charAt(0);
+					grid[row][col] = new BoardCell(row, col, initial);	// puts it in the appropriate place on the grid
 					col++;					
 				}
 				col=0;

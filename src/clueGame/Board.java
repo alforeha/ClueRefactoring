@@ -1,9 +1,12 @@
 package clueGame;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -26,22 +29,49 @@ public class Board {
 				board[x][y] = new BoardCell(x, y);
 			}
 		}
+		initialize();
 	}
 	public Board() {
 		boardConfigFile = "ClueLayout.csv";
 		roomConfigFile = "ClueLegend.txt";
 	}
+	
 	public void initialize() {
 		loadRoomConfig();
 		loadBoardConfig();
 		calcAdjacencies();
 	}
 	public void loadRoomConfig() {
-		//TODO: write code to load from the room config
+		try {	// In case the file can't be found
+			FileReader fin = new FileReader(roomConfigFile);	// Initializing a bunch of variables.
+			Scanner in = new Scanner(fin);
+			String temp;
+			int row=0, col=0;
+			while (in.hasNext()) {
+				temp = in.nextLine();					// Reads in one line at a time
+				Scanner line = new Scanner(temp);
+				line.useDelimiter(",");					// Separates it based on commas
+				while (line.hasNext()) {
+					String spot = line.next();			// Reads in each letter and...
+					char initial = spot.charAt(0);
+					char direc = 'N';
+					if (spot.length()>1 && spot.charAt(1) != 'N') direc = spot.charAt(1); 
+					board[row][col] = new BoardCell(row, col, initial, direc);	// puts it in the appropriate place on the grid
+					col++;					
+				}
+				col=0;
+				row++;
+				line.close();
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Board game file not found.");	// In case the file can't be found
+		}
 	}
 	public void loadBoardConfig() {
-		//TODO: write code to lead from the board config
+		//TODO: write code to load from the board config
 	}
+	
 	public void calcAdjacencies() {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>(board.length, board[0].length);	// Initializing the HashMap
 		for (int x=0; x<board.length; x++) {
@@ -68,7 +98,10 @@ public class Board {
 			}
 		}
 	}
-
+	public void calcTargets(int x, int y, int pathLength) {
+		calcTargets(board[x][x], pathLength, new HashSet<BoardCell>());
+	}
+	
 	public int getNumRows() {
 		return numRows;
 	}
@@ -102,7 +135,5 @@ public class Board {
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
-	public void calcTargets(int x, int y, int pathLength) {
-		calcTargets(board[x][x], pathLength, new HashSet<BoardCell>());
-	}
+
 }
