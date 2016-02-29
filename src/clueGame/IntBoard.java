@@ -1,3 +1,4 @@
+package clueGame;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public class IntBoard {
 		}
 	}
 
-	
 	// Constructor. Takes in a size of the matrix (as rows, columns) and the name of the file to read from.
 	// Creates an empty grid, populates it from the file, then calculates the adjacencies for each cell.
 	public IntBoard(final int ROWS, final int COLS, String filename) {

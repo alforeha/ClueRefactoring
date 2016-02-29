@@ -1,7 +1,10 @@
+package clueGame;
 // Represents one cell in the grid
 public class BoardCell {
-	public int x, y = 0;
+	private int x, y = 0;
 	public String type;
+	private char initial;
+	private DoorDirection direction;
 	// TODO: I don't think anything more needs to be done to this for now
 
 	public BoardCell(int x, int y, String type) {
@@ -15,4 +18,27 @@ public class BoardCell {
 	public String toString() {
 		return "BoardCell [x=" + x + ", y=" + y + ", type=" + type + "]";
 	}
+	
+	public boolean isWalkway(){
+		return true;
+	}
+	
+	public boolean isRoom(){
+		return true;
+	}
+	
+	public boolean isDoorway(){
+		return true;
+	}
+
+	public Object getDoorDirection() {
+		return direction;
+	}
+
+	public char getInitial() {
+		return initial;
+	}
+	
+	
+	
 }
