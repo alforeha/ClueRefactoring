@@ -35,19 +35,19 @@ public class Board {
 	}
 
 	public void initialize() {
-		/*try {
+		try {
 			loadRoomConfig();
 			loadBoardConfig();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error loading config file " + e);
 		} catch (BadConfigFormatException e) {
 			System.out.println("There was a config error.");
-		}*/
+		}
 		calcAdjacencies();
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
-		/*FileReader fin = new FileReader(boardConfigFile);	// Initializing a bunch of variables.
+		FileReader fin = new FileReader(boardConfigFile);	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
 		String temp;
 		int row=0, col=0;
@@ -81,11 +81,11 @@ public class Board {
 		}
 		numRows = row;
 		in.close();
-		*/
+		
 	}
 	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
-		/*rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
+		rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
 		FileReader fin = new FileReader(roomConfigFile);
 		Scanner in = new Scanner(fin);
 		String temp;
@@ -109,12 +109,11 @@ public class Board {
 			line.close();
 		}
 		in.close();
-		*/
 	}
 
 	public void calcAdjacencies() {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>(board.length, board[0].length);	// Initializing the HashMap
-		/*for (int x=0; x < numRows; x++) {
+		for (int x=0; x < numRows; x++) {
 			for (int y=0; y < numColumns; y++) {
 				LinkedList<BoardCell> ll = new LinkedList<BoardCell>();	// Temporary list to store the adjacent cells in
 
@@ -148,26 +147,25 @@ public class Board {
 				}
 
 				else {
-					if (x - 1 >= 0 && (board[x-1][y].isWalkway() || board[x-1][y].isDoorway() && board[x-1][y].getDirection() == DoorDirection.DOWN))
+					if (x - 1 >= 0 && (board[x-1][y].isWalkway() || (board[x-1][y].isDoorway() && board[x-1][y].getDirection() == DoorDirection.DOWN)))
 						ll.add(board[x-1][y]);			// Adds the top cell if it isn't a room
 					
-					if (y - 1 >= 0 && (board[x][y-1].isWalkway() || board[x][y-1].isDoorway() && board[x][y-1].getDirection() == DoorDirection.RIGHT))
+					if (y - 1 >= 0 && (board[x][y-1].isWalkway() || (board[x][y-1].isDoorway() && board[x][y-1].getDirection() == DoorDirection.RIGHT)))
 						ll.add(board[x][y-1]);			// Adds the left cell if it isn't a room
 					
-					if (x + 1 < numRows && (board[x+1][y].isWalkway() || board[x+1][y].isDoorway() && board[x+1][y].getDirection() == DoorDirection.UP))
+					if (x + 1 < numRows && (board[x+1][y].isWalkway() || (board[x+1][y].isDoorway() && board[x+1][y].getDirection() == DoorDirection.UP)))
 						ll.add(board[x+1][y]);		// Adds the bottom cell if it isn't a room
 					
-					if (y + 1 < numColumns && (board[x][y+1].isWalkway() || board[x][y+1].isDoorway() && board[x][y+1].getDirection() == DoorDirection.LEFT))
+					if (y + 1 < numColumns && (board[x][y+1].isWalkway() || (board[x][y+1].isDoorway() && board[x][y+1].getDirection() == DoorDirection.LEFT)))
 						ll.add(board[x][y+1]);	// Adds the right cell if it isn't a room
 					
 					adjMatrix.put(board[x][y], ll);												// Puts the list of adjacent cells into the map
 				}
 			}			
 		}
-		*/
 	}
 	public void calcTargets(BoardCell cell, int pathLength, Set<BoardCell> visited){
-		/*Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);		// Initializes a local HashSet of visited cells
+		Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);		// Initializes a local HashSet of visited cells
 		// This is to ensure the lists of past recursions don't get accidentally manipulated
 		myVisited.add(cell);											// Adds the current cell to the list of cells that have been visited
 		if (pathLength == 0 || cell.isDoorway()) { 
@@ -178,15 +176,14 @@ public class Board {
 				calcTargets(o, pathLength-1, myVisited);		// Let's move to it!
 			}
 		}
-		*/
 	}
 	public void calcTargets(int x, int y, int pathLength) {
-		/*targets.clear();
+		targets.clear();
 		Set<BoardCell> visited = new HashSet<BoardCell>();
 		visited.add(board[x][y]);
 		for (BoardCell c : adjMatrix.get(board[x][y])){
 			calcTargets(c, pathLength - 1, visited);
-		}*/
+		}
 	}
 
 	public int getNumRows() {
