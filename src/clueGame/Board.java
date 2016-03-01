@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class Board {
 	private int numRows, numColumns;
+	private int numDoors = 0;
 	public static final int BOARD_SIZE = 50;
 	private BoardCell[][] board;
 	private static Map<Character, String> rooms;
@@ -58,7 +59,10 @@ public class Board {
 				String spot = line.next();			// Reads in each letter and...
 				char initial = spot.charAt(0);
 				char direc = 'N';
-				if (spot.length()>1 && spot.charAt(1) != 'N') direc = spot.charAt(1); 
+				if (spot.length()>1 && spot.charAt(1) != 'N') {
+					direc = spot.charAt(1);
+					numDoors++;
+				}
 				if (!rooms.keySet().contains(initial)) {
 					line.close();
 					throw new BadConfigFormatException();
@@ -79,6 +83,7 @@ public class Board {
 		in.close();
 
 	}
+	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
 		FileReader fin = new FileReader(roomConfigFile);
@@ -214,5 +219,10 @@ public class Board {
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
-
+	public LinkedList<BoardCell> getAdjList(BoardCell cell) {
+		return adjMatrix.get(cell);
+	}
+	public int getNumDoors() {
+		return numDoors;
+	}
 }

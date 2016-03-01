@@ -63,7 +63,7 @@ public class BoardCell {
 		else return false;
 	}
 
-	public Object getDoorDirection() {
+	public DoorDirection getDoorDirection() {
 		return direction;
 	}
 
