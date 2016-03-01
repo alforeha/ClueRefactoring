@@ -35,19 +35,19 @@ public class Board {
 	}
 
 	public void initialize() {
-		try {
+		/*try {
 			loadRoomConfig();
 			loadBoardConfig();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error loading config file " + e);
 		} catch (BadConfigFormatException e) {
 			System.out.println("There was a config error.");
-		}
+		}*/
 		calcAdjacencies();
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
-		FileReader fin = new FileReader(boardConfigFile);	// Initializing a bunch of variables.
+		/*FileReader fin = new FileReader(boardConfigFile);	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
 		String temp;
 		int row=0, col=0;
@@ -81,11 +81,11 @@ public class Board {
 		}
 		numRows = row;
 		in.close();
-
+		*/
 	}
 	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
-		rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
+		/*rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
 		FileReader fin = new FileReader(roomConfigFile);
 		Scanner in = new Scanner(fin);
 		String temp;
@@ -109,11 +109,12 @@ public class Board {
 			line.close();
 		}
 		in.close();
+		*/
 	}
 
 	public void calcAdjacencies() {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>(board.length, board[0].length);	// Initializing the HashMap
-		for (int x=0; x < numRows; x++) {
+		/*for (int x=0; x < numRows; x++) {
 			for (int y=0; y < numColumns; y++) {
 				LinkedList<BoardCell> ll = new LinkedList<BoardCell>();	// Temporary list to store the adjacent cells in
 
@@ -163,9 +164,10 @@ public class Board {
 				}
 			}			
 		}
+		*/
 	}
 	public void calcTargets(BoardCell cell, int pathLength, Set<BoardCell> visited){
-		Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);		// Initializes a local HashSet of visited cells
+		/*Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);		// Initializes a local HashSet of visited cells
 		// This is to ensure the lists of past recursions don't get accidentally manipulated
 		myVisited.add(cell);											// Adds the current cell to the list of cells that have been visited
 		if (pathLength == 0 || cell.isDoorway()) { 
@@ -176,14 +178,15 @@ public class Board {
 				calcTargets(o, pathLength-1, myVisited);		// Let's move to it!
 			}
 		}
+		*/
 	}
 	public void calcTargets(int x, int y, int pathLength) {
-		targets.clear();
+		/*targets.clear();
 		Set<BoardCell> visited = new HashSet<BoardCell>();
 		visited.add(board[x][y]);
 		for (BoardCell c : adjMatrix.get(board[x][y])){
 			calcTargets(c, pathLength - 1, visited);
-		}
+		}*/
 	}
 
 	public int getNumRows() {
