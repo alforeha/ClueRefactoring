@@ -63,7 +63,7 @@ public class IntBoard {
 				while (line.hasNext()) {
 					String spot = line.next();			// Reads in each letter and...
 					char initial = spot.charAt(0);
-					grid[row][col] = new BoardCell(row, col, initial);	// puts it in the appropriate place on the grid
+					grid[row][col] = new BoardCell(row, col, initial, initial);	// puts it in the appropriate place on the grid
 					col++;					
 				}
 				col=0;

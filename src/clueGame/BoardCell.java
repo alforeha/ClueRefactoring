@@ -39,7 +39,8 @@ public class BoardCell {
 	public BoardCell(int x2, int y2) {
 		x = x2;
 		y = y2;
-		type = "X";
+		initial = 'X';
+		direction = DoorDirection.NONE;
 	}
 
 	@Override
@@ -48,15 +49,18 @@ public class BoardCell {
 	}
 	
 	public boolean isWalkway(){
-		return true;
+		if (initial == 'W') return true;
+		else return false;
 	}
 	
 	public boolean isRoom(){
-		return true;
+		if (initial != 'W' && direction == DoorDirection.NONE) return true;
+		else return false;
 	}
 	
 	public boolean isDoorway(){
-		return true;
+		if (direction != DoorDirection.NONE) return true;
+		else return false;
 	}
 
 	public Object getDoorDirection() {

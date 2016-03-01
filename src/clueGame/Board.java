@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
+
 
 
 public class Board {
@@ -24,64 +26,136 @@ public class Board {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
-		for (int x = 0; x < board.length; x++){
-			for (int y = 0; y < board[x].length; y++){
-				board[x][y] = new BoardCell(x, y);
-			}
-		}
-		initialize();
 	}
 	public Board() {
 		boardConfigFile = "ClueLayout.csv";
 		roomConfigFile = "ClueLegend.txt";
+		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 	}
-	
+
 	public void initialize() {
-		loadRoomConfig();
-		loadBoardConfig();
+		try {
+			loadRoomConfig();
+			loadBoardConfig();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error loading config file " + e);
+		} catch (BadConfigFormatException e) {
+			System.out.println("There was a config error.");
+		}
 		calcAdjacencies();
 	}
-	public void loadRoomConfig() {
-		try {	// In case the file can't be found
-			FileReader fin = new FileReader(roomConfigFile);	// Initializing a bunch of variables.
-			Scanner in = new Scanner(fin);
-			String temp;
-			int row=0, col=0;
-			while (in.hasNext()) {
-				temp = in.nextLine();					// Reads in one line at a time
-				Scanner line = new Scanner(temp);
-				line.useDelimiter(",");					// Separates it based on commas
-				while (line.hasNext()) {
-					String spot = line.next();			// Reads in each letter and...
-					char initial = spot.charAt(0);
-					char direc = 'N';
-					if (spot.length()>1 && spot.charAt(1) != 'N') direc = spot.charAt(1); 
-					board[row][col] = new BoardCell(row, col, initial, direc);	// puts it in the appropriate place on the grid
-					col++;					
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
+		// In case the file can't be found
+		FileReader fin = new FileReader(boardConfigFile);	// Initializing a bunch of variables.
+		Scanner in = new Scanner(fin);
+		String temp;
+		int row=0, col=0;
+		while (in.hasNext()) {
+			temp = in.nextLine();					// Reads in one line at a time
+			Scanner line = new Scanner(temp);
+			line.useDelimiter(",");					// Separates it based on commas
+			while (line.hasNext()) {
+				String spot = line.next();			// Reads in each letter and...
+				char initial = spot.charAt(0);
+				char direc = 'N';
+				if (spot.length()>1 && spot.charAt(1) != 'N') direc = spot.charAt(1); 
+				if (!rooms.keySet().contains(initial)) {
+					line.close();
+					throw new BadConfigFormatException();
 				}
-				col=0;
-				row++;
-				line.close();
+				board[row][col] = new BoardCell(row, col, initial, direc);	// puts it in the appropriate place on the grid
+				col++;					
 			}
-			in.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Board game file not found.");	// In case the file can't be found
+			if (row > 0 && numColumns != col){
+				line.close();
+				throw new BadConfigFormatException();
+			}
+			numColumns = col;
+			col=0;
+			row++;
+			line.close();
 		}
+		numRows = row;
+		in.close();
+
 	}
-	public void loadBoardConfig() {
-		//TODO: write code to load from the board config
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+		rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
+		FileReader fin = new FileReader(roomConfigFile);
+		Scanner in = new Scanner(fin);
+		String temp;
+		char c;
+		String roomName;
+		String type;
+		in.useDelimiter(", ");
+		while (in.hasNext()){
+			temp = in.nextLine();
+			Scanner line = new Scanner(temp);
+			line.useDelimiter(", ");
+			try{
+				c = line.next().charAt(0);
+				roomName = line.next();
+				type = line.next();
+			} catch(NoSuchElementException e){
+				line.close();
+				throw new BadConfigFormatException();
+			}
+			rooms.put(c, roomName);
+			line.close();
+		}
+		in.close();
 	}
-	
+
 	public void calcAdjacencies() {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>(board.length, board[0].length);	// Initializing the HashMap
-		for (int x=0; x<board.length; x++) {
-			for (int y=0; y < board[x].length; y++) {
+		for (int x=0; x < numRows; x++) {
+			for (int y=0; y < numColumns; y++) {
 				LinkedList<BoardCell> ll = new LinkedList<BoardCell>();	// Temporary list to store the adjacent cells in
-				if (x - 1 >= 0) ll.add(board[x-1][y]);					// Adds the left cell if it exists
-				if (y - 1 >= 0) ll.add(board[x][y-1]);					// Adds the top cell if it exists
-				if (x + 1 < board.length) ll.add(board[x+1][y]);			// Adds the right cell if it exists
-				if (y + 1 < board[x].length) ll.add(board[x][y+1]);		// Adds the top cell if it exists
-				adjMatrix.put(board[x][y], ll);						// Puts the list of adjacent cells into the map
+
+				if (board[x][y].isDoorway()){
+					switch (board[x][y].getDirection()){
+					case DOWN:
+						ll.add(board[x+1][y]);
+						break;
+					case LEFT:
+						ll.add(board[x][y-1]);
+						break;
+					case NONE:
+						break;
+					case RIGHT:
+						ll.add(board[x][y+1]);
+						break;
+					case UP:
+						ll.add(board[x-1][y]);
+						break;
+					default:
+						break;
+					}
+					adjMatrix.put(board[x][y], ll);
+					continue;
+				}
+				
+
+				else if (board[x][y].isRoom()) {
+					adjMatrix.put(board[x][y], ll);
+					continue;
+				}
+
+				else {
+					if (x - 1 >= 0 && (board[x-1][y].isWalkway() || board[x-1][y].isDoorway() && board[x-1][y].getDirection() == DoorDirection.DOWN))
+						ll.add(board[x-1][y]);			// Adds the top cell if it isn't a room
+					
+					if (y - 1 >= 0 && (board[x][y-1].isWalkway() || board[x][y-1].isDoorway() && board[x][y-1].getDirection() == DoorDirection.RIGHT))
+						ll.add(board[x][y-1]);			// Adds the left cell if it isn't a room
+					
+					if (x + 1 < numRows && (board[x+1][y].isWalkway() || board[x+1][y].isDoorway() && board[x+1][y].getDirection() == DoorDirection.UP))
+						ll.add(board[x+1][y]);		// Adds the bottom cell if it isn't a room
+					
+					if (y + 1 < numColumns && (board[x][y+1].isWalkway() || board[x][y+1].isDoorway() && board[x][y+1].getDirection() == DoorDirection.LEFT))
+						ll.add(board[x][y+1]);	// Adds the right cell if it isn't a room
+					
+					adjMatrix.put(board[x][y], ll);												// Puts the list of adjacent cells into the map
+				}
 			}			
 		}
 	}
@@ -89,7 +163,7 @@ public class Board {
 		Set<BoardCell> myVisited = new HashSet<BoardCell>(visited);		// Initializes a local HashSet of visited cells
 		// This is to ensure the lists of past recursions don't get accidentally manipulated
 		myVisited.add(cell);											// Adds the current cell to the list of cells that have been visited
-		if (pathLength == 0) { 
+		if (pathLength == 0 || cell.isDoorway()) { 
 			targets.add(cell); return; 							// Adds the cell to the set of targets if we're at the end
 		}
 		for (BoardCell o: adjMatrix.get(cell)) {				// Iterates through each adjacent cell
@@ -99,9 +173,14 @@ public class Board {
 		}
 	}
 	public void calcTargets(int x, int y, int pathLength) {
-		calcTargets(board[x][x], pathLength, new HashSet<BoardCell>());
+		targets.clear();
+		Set<BoardCell> visited = new HashSet<BoardCell>();
+		visited.add(board[x][y]);
+		for (BoardCell c : adjMatrix.get(board[x][y])){
+			calcTargets(c, pathLength - 1, visited);
+		}
 	}
-	
+
 	public int getNumRows() {
 		return numRows;
 	}
