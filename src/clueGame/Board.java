@@ -29,8 +29,8 @@ public class Board {
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 	}
 	public Board() {
-		boardConfigFile = "ClueLayout.csv";
-		roomConfigFile = "ClueLegend.txt";
+		boardConfigFile = "Clue Layout.csv";
+		roomConfigFile = "Legend.txt";
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 	}
 

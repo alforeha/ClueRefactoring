@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
-import clueGame.IntBoard;
 
 public class OurBoardTests {
 
@@ -19,7 +18,7 @@ public class OurBoardTests {
 	Board board = null;
 	@Before
 	public void initialization(){
-		board = new Board("Clue Layout2.csv", "Legend.txt");
+		board = new Board("Clue Layout.csv", "Legend.txt");
 		board.initialize();
 	}
 
@@ -36,10 +35,10 @@ public class OurBoardTests {
 
 	@Test
 	public void testBRCorner(){
-		BoardCell cell = board.getCellAt(3,3);
+		BoardCell cell = board.getCellAt(25,12);
 		LinkedList<BoardCell> testList = board.getAdjList(cell);
-		assertTrue(testList.contains(board.getCellAt(2, 3)));
-		//assertTrue(testList.contains(board.getCellAt(3, 2)));
+		assertTrue(testList.contains(board.getCellAt(24, 12)));
+		assertTrue(testList.contains(board.getCellAt(25, 11)));
 		assertEquals(1, testList.size());
 		// tests if the cell to the left and the one directly up from the BR corner are
 		// in the list, and that they are the only two in the list.
@@ -47,11 +46,11 @@ public class OurBoardTests {
 
 	@Test
 	public void testREdge(){
-		BoardCell cell = board.getCellAt(1,3);
+		BoardCell cell = board.getCellAt(1,12);
 		LinkedList<BoardCell> testList = board.getAdjList(cell);
-		assertTrue(testList.contains(board.getCellAt(2, 3)));
-		assertTrue(testList.contains(board.getCellAt(0, 3)));
-		assertTrue(testList.contains(board.getCellAt(1, 2)));
+		assertTrue(testList.contains(board.getCellAt(2, 12)));
+		assertTrue(testList.contains(board.getCellAt(0, 12)));
+		assertTrue(testList.contains(board.getCellAt(1, 11)));
 		assertEquals(3, testList.size());
 		// tests if the cells to the left, up, and down from a right edge are
 		// in the list, and that they are the only ones in the list.
@@ -61,9 +60,9 @@ public class OurBoardTests {
 	public void testLEdge(){
 		BoardCell cell = board.getCellAt(2,0);
 		LinkedList<BoardCell> testList = board.getAdjList(cell);
-		//assertTrue(testList.contains(board.getCellAt(2, 1)));
+		assertTrue(testList.contains(board.getCellAt(2, 1)));
 		assertTrue(testList.contains(board.getCellAt(1, 0)));
-		//assertTrue(testList.contains(board.getCellAt(3, 0)));
+		assertTrue(testList.contains(board.getCellAt(3, 0)));
 		assertEquals(1, testList.size());
 		// tests if the cells to the right, up, and down from a left edge are
 		// in the list, and that they are the only ones in the list.
@@ -74,23 +73,24 @@ public class OurBoardTests {
 		BoardCell cell = board.getCellAt(1,1);
 		LinkedList<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCellAt(0, 1)));
+		assertTrue(testList.contains(board.getCellAt(2, 1)));
 		assertTrue(testList.contains(board.getCellAt(1, 0)));
-		assertTrue(testList.contains(board.getCellAt(1, 2)));
-		assertEquals(3, testList.size());
+		assertTrue(testList.contains(board.getCellAt(1, 2)));		
+		assertEquals(4, testList.size());
 		// tests if the cells in all four directions from [1,1] are
 		// in the list, and that they are the only ones in the list.
 	}
 
 	@Test
 	public void test2FLM(){	// 2FLM = 2 From Last Middle
-		BoardCell cell = board.getCellAt(2,2);
+		BoardCell cell = board.getCellAt(23,10);
 		LinkedList<BoardCell> testList = board.getAdjList(cell);
-		/*assertTrue(testList.contains(board.getCellAt(3, 2)));
-		assertTrue(testList.contains(board.getCellAt(2, 1)));
-		assertTrue(testList.contains(board.getCellAt(1, 2)));
-		assertTrue(testList.contains(board.getCellAt(2, 3)));*/
-		assertEquals(0, testList.size());
-		// tests if the cells in all four directions from [2,2] are
+		assertTrue(testList.contains(board.getCellAt(22, 10)));
+		assertTrue(testList.contains(board.getCellAt(24, 10)));
+		assertTrue(testList.contains(board.getCellAt(23, 9)));
+		assertTrue(testList.contains(board.getCellAt(23, 11)));
+		assertEquals(4, testList.size());
+		// tests if the cells in all four directions from [23,10] are
 		// in the list, and that they are the only ones in the list.
 	}
 
