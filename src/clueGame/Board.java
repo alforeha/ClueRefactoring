@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -22,7 +23,11 @@ public class Board {
 	private Set<BoardCell> targets = new HashSet<BoardCell>();;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private Player[] players;
 
+	public Player[] getPlayers() {
+		return players;
+	}
 	public Board(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
@@ -53,7 +58,10 @@ public class Board {
 	}
 	private void loadPlayers() {
 		// TODO Auto-generated method stub
-		
+		players = new Player[6];
+		for(int i = 0; i < 6; i++){
+			players[i] = new Player("Bob", 0, 0, Color.black);
+		}
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
