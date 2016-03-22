@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
+import java.lang.reflect.Field;
 
 
 
@@ -56,12 +57,45 @@ public class Board {
 		// TODO Auto-generated method stub
 		
 	}
-	private void loadPlayers() {
+	private void loadPlayers() throws FileNotFoundException{
 		// TODO Auto-generated method stub
 		players = new Player[6];
-		for(int i = 0; i < 6; i++){
-			players[i] = new Player("Bob", 0, 0, Color.black);
+		FileReader fin = new FileReader("Players.txt");	// Initializing a bunch of variables.
+		Scanner in = new Scanner(fin);
+		String temp;
+		int i=0;
+		while (in.hasNextLine()){
+			temp = in.nextLine();
+			String name = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String color = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String sRow = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String sCol = temp;
+			if(i == 0)
+				players[i] = new HumanPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			else
+				players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			i++;
 		}
+		
+		
+		
+		//for(int i = 0; i < 6; i++){
+		//	players[i] = new Player("Bob", 0, 0, Color.black);
+		//}
+	}
+	public Color convertColor(String strColor) {
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
+		return color;
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
