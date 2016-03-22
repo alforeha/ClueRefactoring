@@ -25,6 +25,7 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private Player[] players;
+	private Card[] cards;
 
 	public Player[] getPlayers() {
 		return players;
@@ -53,12 +54,18 @@ public class Board {
 		}
 		calcAdjacencies();
 	}
-	private void loadCards() {
-		// TODO Auto-generated method stub
-		
+	public Card[] getCards() {
+		return cards;
+	}
+	private void loadCards() throws FileNotFoundException {
+		cards = new Card[21];
+		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
+		Scanner in = new Scanner(fin);
+		for(int i = 0; i < 21; i++){
+			cards[i] = new Card(CardType.PERSON, "Card");
+		}
 	}
 	private void loadPlayers() throws FileNotFoundException{
-		// TODO Auto-generated method stub
 		players = new Player[6];
 		FileReader fin = new FileReader("Players.txt");	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
@@ -79,12 +86,6 @@ public class Board {
 				players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
 			i++;
 		}
-		
-		
-		
-		//for(int i = 0; i < 6; i++){
-		//	players[i] = new Player("Bob", 0, 0, Color.black);
-		//}
 	}
 	public Color convertColor(String strColor) {
 		Color color; 
