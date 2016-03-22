@@ -38,12 +38,22 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
+			loadPlayers();
+			loadCards();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error loading config file " + e);
 		} catch (BadConfigFormatException e) {
 			System.out.println("There was a config error.");
 		}
 		calcAdjacencies();
+	}
+	private void loadCards() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void loadPlayers() {
+		// TODO Auto-generated method stub
+		
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
