@@ -58,17 +58,14 @@ public class GameSetupTests {
 		
 		boolean roo = false, wep = false, per = false;
 		for(Card c : board.getCards()){
-			if(c.getName() == "Miss Scarlett"){
+			if(c.getName().equals("Miss Scarlett")){
 				per = true;
-				break;
 			}
-			if(c.getName() == "Wrench"){
+			if(c.getName().equals("Wrench")){
 				wep = true;
-				break;
 			}
-			if(c.getName() == "Lounge"){
+			if(c.getName().equals("Lounge")){
 				roo = true;
-				break;
 			}
 		}
 		assertTrue(per && wep && roo);

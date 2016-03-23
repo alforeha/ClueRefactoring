@@ -61,9 +61,24 @@ public class Board {
 		cards = new Card[21];
 		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
-		for(int i = 0; i < 21; i++){
-			cards[i] = new Card(CardType.PERSON, "Card");
+		String temp;
+		
+		for(int i = 0; i < 6; i++){
+			temp = in.nextLine();
+			cards[i] = new Card(CardType.PERSON, temp);
 		}
+		for(int i = 0; i < 6; i++){
+			temp = in.nextLine();
+			cards[i+6] = new Card(CardType.WEAPON, temp);
+		}
+		for(int i = 0; i < 9; i++){
+			temp = in.nextLine();
+			cards[i+12] = new Card(CardType.ROOM, temp);
+		}
+		
+		//for(int i = 0; i < 21; i++){
+		//	cards[i] = new Card(CardType.PERSON, "Card");
+		//}
 	}
 	private void loadPlayers() throws FileNotFoundException{
 		players = new Player[6];
