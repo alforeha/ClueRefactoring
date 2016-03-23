@@ -59,7 +59,9 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(String name, String weapon, String room){
-		return false;
+		if(solution.person.equals(name) && solution.room.equals(room) && solution.weapon.equals(weapon))
+			return true;
+		else return false;
 	}
 	
 	private void dealCards() {
