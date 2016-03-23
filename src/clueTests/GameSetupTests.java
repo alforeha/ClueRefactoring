@@ -80,11 +80,6 @@ public class GameSetupTests {
 			assertEquals(3, p.getMyCards().size());
 		}
 		
-		for(int i=0; i<board.getCards().length; i++){
-			if(board.getCards()[i] != null)
-				fail(board.getCards()[i].getName() + " not dealt.");
-		}
-		
 		Set<Card> cardList = new HashSet<Card>();
 		for(Player p : board.getPlayers()){
 			for(Card c : p.getMyCards()){
@@ -93,6 +88,34 @@ public class GameSetupTests {
 			}
 		}
 		assertEquals(18, cardList.size()); // 18 b/c 3 cards are in the solution
+		
+		for(Card c : cardList){
+			switch(c.getType()){
+			case PERSON:
+				if(board.solution.person.equals(c.getName()))
+					fail("Player has person solution card.");
+				break;
+			case WEAPON:
+				if(board.solution.weapon.equals(c.getName()))
+					fail("Player has weapon solution card.");
+				break;
+			case ROOM:
+				if(board.solution.room.equals(c.getName()))
+					fail("Player has room solution card.");
+				break;
+			}
+		}
 	}
-
+	
+	@Test
+	public void testAcccusation(){
+		board.solution.person = "Bob";
+		board.solution.weapon = "Fork";
+		board.solution.room = "Mines";
+		
+		assertTrue(board.checkAccusation("Bob", "Fork", "Mines"));
+		assertFalse(board.checkAccusation("Jeff", "Fork", "Mines"));
+		assertFalse(board.checkAccusation("Bob", "Spoon", "Mines"));
+		assertFalse(board.checkAccusation("Bob", "Fork", "CU"));
+	}
 }

@@ -13,7 +13,8 @@ import clueGame.DoorDirection;
 
 public class BoardTestPartI {
 
-	Board board;
+
+
 	@Before
 	public void setUp() throws Exception {
 		board = new Board();

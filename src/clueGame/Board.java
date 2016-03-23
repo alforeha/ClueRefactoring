@@ -27,6 +27,7 @@ public class Board {
 	private String roomConfigFile;
 	private Player[] players;
 	private Card[] cards;
+	public Solution solution;
 
 	public Player[] getPlayers() {
 		return players;
@@ -56,6 +57,11 @@ public class Board {
 		dealCards();
 		calcAdjacencies();
 	}
+	
+	public boolean checkAccusation(String name, String weapon, String room){
+		return false;
+	}
+	
 	private void dealCards() {
 		Card[] backup = new Card[21];
 		for(int i = 0; i < 21 ; i++){
@@ -67,7 +73,7 @@ public class Board {
 		int solutionWeapon = rand.nextInt(6) + 6;
 		int solutionRoom = rand.nextInt(9) + 12;
 		
-		Solution solution = new Solution(cards[solutionPlayer].getName(), cards[solutionWeapon].getName(), cards[solutionRoom].getName());
+		solution = new Solution(cards[solutionPlayer].getName(), cards[solutionWeapon].getName(), cards[solutionRoom].getName());
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
@@ -75,11 +81,13 @@ public class Board {
 		int randPlayer = rand.nextInt(6);
 		
 		for(int i = 0; i < cards.length; i++){
-			if(cards[i] != null){
+			randPlayer = rand.nextInt(6);
+			if(cards[i] == null){
 				continue;
 			}
 			else if(players[randPlayer].getMyCards().size() < 3){
 				players[randPlayer].giveCard(cards[i]);
+				cards[i] = null;
 			}
 			else{
 				i--;
