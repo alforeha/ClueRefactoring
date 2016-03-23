@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.lang.reflect.Field;
@@ -52,7 +53,42 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println("There was a config error.");
 		}
+		dealCards();
 		calcAdjacencies();
+	}
+	private void dealCards() {
+		Card[] backup = new Card[21];
+		for(int i = 0; i < 21 ; i++){
+			backup[i] = cards[i];
+		}
+		
+		Random rand = new Random();
+		int solutionPlayer = rand.nextInt(6);
+		int solutionWeapon = rand.nextInt(6) + 6;
+		int solutionRoom = rand.nextInt(9) + 12;
+		
+		Solution solution = new Solution(cards[solutionPlayer].getName(), cards[solutionWeapon].getName(), cards[solutionRoom].getName());
+		cards[solutionPlayer] = null;
+		cards[solutionWeapon] = null;
+		cards[solutionRoom] = null;
+		
+		int randPlayer = rand.nextInt(6);
+		
+		for(int i = 0; i < cards.length; i++){
+			if(cards[i] != null){
+				continue;
+			}
+			else if(players[randPlayer].getMyCards().size() < 3){
+				players[randPlayer].giveCard(cards[i]);
+			}
+			else{
+				i--;
+			}
+		}
+		
+		for(int i = 0; i < 21 ; i++){
+			cards[i] = backup[i];
+		}
 	}
 	public Card[] getCards() {
 		return cards;

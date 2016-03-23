@@ -3,6 +3,9 @@ package clueTests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +72,27 @@ public class GameSetupTests {
 			}
 		}
 		assertTrue(per && wep && roo);
+	}
+	
+	@Test
+	public void testDeal() {
+		for(Player p : board.getPlayers()){
+			assertEquals(3, p.getMyCards().size());
+		}
+		
+		for(int i=0; i<board.getCards().length; i++){
+			if(board.getCards()[i] != null)
+				fail(board.getCards()[i].getName() + " not dealt.");
+		}
+		
+		Set<Card> cardList = new HashSet<Card>();
+		for(Player p : board.getPlayers()){
+			for(Card c : p.getMyCards()){
+				if(!cardList.contains(c))
+					cardList.add(c);
+			}
+		}
+		assertEquals(18, cardList.size()); // 18 b/c 3 cards are in the solution
 	}
 
 }

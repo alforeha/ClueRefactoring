@@ -58,4 +58,12 @@ public class Player {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	public Set<Card> getMyCards() {
+		return myCards;
+	}
+
+	public void giveCard(Card card) {
+		myCards.add(card);
+	}
 }
