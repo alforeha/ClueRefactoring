@@ -22,6 +22,10 @@ public class GameSetupTests {
 		board.initialize();
 	}
 	
+	
+	// CHECKS THAT THERE ARE 6 TOTAL PLAYERS
+	// CHECKS THAT THE FIRST PLAYER IS A HUMAN, HAS THE CORRECT LOADED COLOR, AND IS IN THE CORRECT LOCATION
+	// CHECKS THAT THE LAST PLAYER IS A COMPUTER, HAS THE CORRECT COLOR, AND IS IN CORRECT LOCATION
 	@Test
 	public void testLoadPeople() {
 		assertEquals(6, board.getPlayers().length);
@@ -37,6 +41,10 @@ public class GameSetupTests {
 		assertEquals(board.getPlayers()[5].getCol(), 10);
 	}
 	
+	
+	// TESTS THAT THE DECK IN THE BOARD CLASS CONTAINS 21 CARDS
+	// THEN CHECKS THAT THERE ARE THE CORRECT NUMBER OF EACH CARD TYPE
+	// LASTLY CHECKS THAT THE NAMES LOADED CORRECTLY
 	@Test
 	public void testLoadCards() {
 		assertEquals(21, board.getCards().length);
@@ -74,6 +82,10 @@ public class GameSetupTests {
 		assertTrue(per && wep && roo);
 	}
 	
+	
+	// CHECKS THAT EACH PLAYER HAS 3 CARDS (21 - 3 solution cards = 18 --> 18 / 6 = 3)
+	// THEN CHECKS THAT NO ONE HAS A DUPLICATE CARD BY ADDING ALL PLAYER CARDS BACK TO A NEW SET (18 cards)
+	// FINALLY CHECKS THAT NO PLAYER HAS A CARD THAT THE SOLUTION CONTAINS, THEREFORE IT ALSO CHECKS ALL CARDS HAVE BEEN DELT AND NO DUPLICATES
 	@Test
 	public void testDeal() {
 		for(Player p : board.getPlayers()){
@@ -107,6 +119,8 @@ public class GameSetupTests {
 		}
 	}
 	
+	
+	// TEST SETS PUBLIC SOLUTION VARIABLES AND CHECKS AGAINST HARD CODED GUESSES
 	@Test
 	public void testAcccusation(){
 		board.solution.person = "Bob";
