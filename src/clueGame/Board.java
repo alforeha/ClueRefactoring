@@ -29,6 +29,10 @@ public class Board {
 	private Card[] cards;
 	public Solution solution;
 
+	public void setPlayers(Player[] players) {
+		this.players = players;
+	}
+	
 	public Player[] getPlayers() {
 		return players;
 	}
@@ -103,7 +107,7 @@ public class Board {
 	
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
 		
-		return null;
+		return new Card(CardType.ROOM, "Batroom");
 	}
 	
 	public Card[] getCards() {
