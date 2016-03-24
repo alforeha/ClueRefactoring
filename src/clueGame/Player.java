@@ -23,7 +23,7 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion){
-		return null;
+		return new Card(CardType.ROOM, "Batroom");
 	}
 
 	public Color getColor() {
@@ -65,5 +65,6 @@ public class Player {
 
 	public void giveCard(Card card) {
 		myCards.add(card);
+		seenCards.add(card);
 	}
 }

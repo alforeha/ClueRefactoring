@@ -17,7 +17,7 @@ public class BoardTestPartI {
 
 	@Before
 	public void setUp() throws Exception {
-		board = new Board();
+		Board board = new Board();
 		board.initialize();
 	}
 

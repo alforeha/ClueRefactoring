@@ -118,18 +118,4 @@ public class GameSetupTests {
 			}
 		}
 	}
-	
-	
-	// TEST SETS PUBLIC SOLUTION VARIABLES AND CHECKS AGAINST HARD CODED GUESSES
-	@Test
-	public void testAcccusation(){
-		board.solution.person = "Bob";
-		board.solution.weapon = "Fork";
-		board.solution.room = "Mines";
-		
-		assertTrue(board.checkAccusation("Bob", "Fork", "Mines"));
-		assertFalse(board.checkAccusation("Jeff", "Fork", "Mines"));
-		assertFalse(board.checkAccusation("Bob", "Spoon", "Mines"));
-		assertFalse(board.checkAccusation("Bob", "Fork", "CU"));
-	}
 }

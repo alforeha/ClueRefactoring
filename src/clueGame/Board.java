@@ -100,6 +100,12 @@ public class Board {
 			cards[i] = backup[i];
 		}
 	}
+	
+	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
+		
+		return null;
+	}
+	
 	public Card[] getCards() {
 		return cards;
 	}
