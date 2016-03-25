@@ -49,6 +49,7 @@ public class ComputerPlayer extends Player{
 			}
 			
 			if(!hasBeenSeen){
+				
 				if(c.getType().equals(CardType.PERSON))
 					coolPeopleToGuess.add(c);
 				else if(c.getType().equals(CardType.WEAPON))
