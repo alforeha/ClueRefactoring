@@ -106,8 +106,21 @@ public class Board {
 	}
 	
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
+		int startIndex = 0;
+		for(int i = 0; i < 6; i++){
+			if(players[i].getPlayerName().equals(accusingPlayer)){
+				startIndex = i;
+				break;
+			}
+		}
 		
-		return new Card(CardType.ROOM, "Batroom");
+		Card answer = null;
+		for(int i = (startIndex+1)%(players.length); i != startIndex; i = (i+1)%(players.length)){
+			answer = players[i].disproveSuggestion(suggestion);
+			if (answer != null) return answer;
+		}
+		
+		return answer;
 	}
 	
 	public Card[] getCards() {
