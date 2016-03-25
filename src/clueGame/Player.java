@@ -45,6 +45,11 @@ public class Player {
 		
 		return null;
 	}
+	
+	public void setLocation(BoardCell b){
+		row = b.getX();
+		column = b.getY();
+	}
 
 	public Color getColor() {
 		// TODO Auto-generated method stub

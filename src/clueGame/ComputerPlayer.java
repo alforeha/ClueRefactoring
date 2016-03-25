@@ -9,8 +9,14 @@ public class ComputerPlayer extends Player{
 		// TODO Auto-generated constructor stub
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets){
-		return null;
+		/*
+		for (BoardCell b : targets){
+			if (b.isDoorway())
+				return b;
+		}
+		*/
 		
+		return new BoardCell(0,0);
 	}
 	public void makeAccusation(){
 		
