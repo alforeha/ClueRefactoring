@@ -13,6 +13,8 @@ public class Player {
 	private Color color;
 	private Set<Card> myCards;
 	private Set<Card> seenCards;
+	protected int prevRow;
+	protected int prevCol;
 	
 	public Player(String playerName, int row, int column, Color color) {
 		
@@ -47,6 +49,8 @@ public class Player {
 	}
 	
 	public void setLocation(BoardCell b){
+		prevRow = row;
+		prevCol = column;
 		row = b.getX();
 		column = b.getY();
 	}

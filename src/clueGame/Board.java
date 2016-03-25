@@ -321,6 +321,8 @@ public class Board {
 		for (BoardCell c : adjMatrix.get(board[x][y])){
 			calcTargets(c, pathLength - 1, visited);
 		}
+		if(targets.contains(board[x][y]))
+			targets.remove(board[x][y]);
 	}
 
 	public int getNumRows() {

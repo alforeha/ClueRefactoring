@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player{
@@ -9,14 +10,23 @@ public class ComputerPlayer extends Player{
 		// TODO Auto-generated constructor stub
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets){
-		/*
 		for (BoardCell b : targets){
-			if (b.isDoorway())
+			if (b.isDoorway() && (b.getX() != prevRow || b.getY() != prevCol)){
 				return b;
+			}
 		}
-		*/
 		
-		return new BoardCell(0,0);
+		int i = 0;
+		Random rand = new Random();
+		int j = rand.nextInt(targets.size());
+		
+		for (BoardCell b : targets){
+			if (i == j)
+				return b;
+			i++;
+		}
+		
+		return null;
 	}
 	public void makeAccusation(){
 		
