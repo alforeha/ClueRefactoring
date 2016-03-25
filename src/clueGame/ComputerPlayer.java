@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
@@ -28,10 +29,50 @@ public class ComputerPlayer extends Player{
 		
 		return null;
 	}
+	
 	public void makeAccusation(){
 		
 	}
+	
 	public Solution makeSuggestion(Board board, BoardCell location){
-		return new Solution("a", "b", "c");
+		Solution guess = new Solution("","",board.getRooms().get(location.getInitial()));
+		
+		ArrayList<Card> coolPeopleToGuess = new ArrayList<Card>();
+		ArrayList<Card> coolWeaponsToGuess = new ArrayList<Card>();
+		
+		for(Card c : board.getCards()){
+			
+			boolean hasBeenSeen = false;
+			for(Card seen : seenCards){
+				if(seen.getName().equals(c.getName()))
+					hasBeenSeen = true;
+			}
+			
+			if(!hasBeenSeen){
+				if(c.getType().equals(CardType.PERSON))
+					coolPeopleToGuess.add(c);
+				else if(c.getType().equals(CardType.WEAPON))
+					coolWeaponsToGuess.add(c);
+			}
+		}
+		
+		int i = 0;
+		Random rand = new Random();
+		int r = rand.nextInt(coolPeopleToGuess.size());
+		for(Card c : coolPeopleToGuess){
+			if (i == r)
+				guess.person = c.getName();
+			i++;
+		}
+		
+		i = 0;
+		r = rand.nextInt(coolWeaponsToGuess.size());
+		for(Card c : coolWeaponsToGuess){
+			if (i == r)
+				guess.weapon = c.getName();
+			i++;
+		}
+		
+		return guess;
 	}
 }

@@ -16,7 +16,9 @@ public class Card {
 	public void setType(CardType type) {
 		this.type = type;
 	}
-	public boolean equals(){
+	public boolean equals(Card c){
+		if (this.cardName.equals(c.cardName))
+			return true;
 		return false;
 	}
 	public CardType getType() {

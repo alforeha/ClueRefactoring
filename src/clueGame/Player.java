@@ -12,7 +12,7 @@ public class Player {
 	private int row, column;
 	private Color color;
 	private Set<Card> myCards;
-	private Set<Card> seenCards;
+	protected Set<Card> seenCards;
 	protected int prevRow;
 	protected int prevCol;
 	
