@@ -94,6 +94,10 @@ public class Player {
 
 	public void giveCard(Card card) {
 		myCards.add(card);
+		seeCard(card);
+	}
+	
+	public void seeCard(Card card) {
 		seenCards.add(card);
 	}
 }

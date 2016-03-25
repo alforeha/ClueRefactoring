@@ -31,7 +31,7 @@ public class ComputerPlayer extends Player{
 	public void makeAccusation(){
 		
 	}
-	public void makeSuggestion(Board board, BoardCell location){
-		
+	public Solution makeSuggestion(Board board, BoardCell location){
+		return new Solution("a", "b", "c");
 	}
 }
