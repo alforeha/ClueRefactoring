@@ -13,11 +13,11 @@ import clueGame.DoorDirection;
 
 public class BoardTestPartI {
 
-
+	private Board board;
 
 	@Before
 	public void setUp() throws Exception {
-		Board board = new Board();
+		board = new Board();
 		board.initialize();
 	}
 

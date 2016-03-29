@@ -1,7 +1,12 @@
 package clueGame;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
 // Represents one cell in the grid
 public class BoardCell {
 	private int x, y = 0;
+	private final int CELL_WIDTH = 60, CELL_HEIGHT = 30;
 	public String type;
 	private char initial;
 	private DoorDirection direction;
@@ -85,6 +90,13 @@ public class BoardCell {
 
 	public DoorDirection getDirection() {
 		return direction;
+	}
+
+	public void draw(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+		g.setColor(Color.GREEN);
+		g.drawRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
 	}
 	
 	
