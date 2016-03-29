@@ -92,11 +92,47 @@ public class BoardCell {
 		return direction;
 	}
 
-	public void draw(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
-		g.setColor(Color.GREEN);
-		g.drawRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+	public void draw(Graphics g, BoardCell[][] b) {
+		if(this.isWalkway()){
+			g.setColor(Color.YELLOW);
+			g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+			g.setColor(Color.BLACK);
+			g.drawRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+		}
+		if(!this.isWalkway()){
+			g.setColor(Color.GRAY);
+			g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+			g.setColor(Color.BLACK);
+			if(x > 0 && b[x-1][y].getInitial() != b[x][y].getInitial())
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH*(y + 1), CELL_HEIGHT*x);
+			if(x == 0)
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH*(y + 1), CELL_HEIGHT*x);
+			if(b[x+1][y] != null && b[x+1][y].getInitial() != b[x][y].getInitial())
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*(x+1), CELL_WIDTH*(y + 1), CELL_HEIGHT*(x+1));
+			if(b[x+1][y] == null)
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*(x+1), CELL_WIDTH*(y + 1), CELL_HEIGHT*(x+1));
+			if(y > 0 && b[x][y-1].getInitial() != b[x][y].getInitial())
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH*y, CELL_HEIGHT*(x+1));
+			if(y == 0)
+				g.drawLine(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH*y, CELL_HEIGHT*(x+1));
+			if(b[x][y+1] != null && b[x][y+1].getInitial() != b[x][y].getInitial())
+				g.drawLine(CELL_WIDTH*(y+1), CELL_HEIGHT*x, CELL_WIDTH*(y+1), CELL_HEIGHT*(x+1));
+			if(b[x][y+1] == null)
+				g.drawLine(CELL_WIDTH*(y+1), CELL_HEIGHT*x, CELL_WIDTH*(y+1), CELL_HEIGHT*(x+1));
+		}
+		if(this.isDoorway()){
+			//g.setColor(Color.GRAY);
+			//g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
+			g.setColor(Color.BLUE);
+			if(this.getDirection() == DoorDirection.DOWN)
+				g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x + ((CELL_HEIGHT*5) / 6), CELL_WIDTH, CELL_HEIGHT / 6);
+			if(this.getDirection() == DoorDirection.UP)
+				g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT / 6);
+			if(this.getDirection() == DoorDirection.RIGHT)
+				g.fillRect(CELL_WIDTH*y + ((CELL_WIDTH*11) / 12), CELL_HEIGHT*x, CELL_WIDTH / 12, CELL_HEIGHT);
+			if(this.getDirection() == DoorDirection.LEFT)
+				g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH / 12, CELL_HEIGHT);
+		}
 	}
 	
 	

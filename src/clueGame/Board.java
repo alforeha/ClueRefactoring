@@ -39,7 +39,7 @@ public class Board extends JPanel{
 		for(int r = 0; r < numRows; r++){
 			for(int c = 0; c < numColumns; c++){
 				System.out.println(board[r][c]);
-				board[r][c].draw(g);
+				board[r][c].draw(g, board);
 			}
 		}
 	}
