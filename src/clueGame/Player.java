@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -99,5 +100,10 @@ public class Player {
 	
 	public void seeCard(Card card) {
 		seenCards.add(card);
+	}
+
+	public void draw(Graphics g, BoardCell[][] board) {
+		g.setColor(color);
+		g.fillOval((int)(((double)column + (0.3))*(double)BoardCell.CELL_WIDTH), row*BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT);
 	}
 }

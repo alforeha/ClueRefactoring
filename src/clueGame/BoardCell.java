@@ -6,16 +6,19 @@ import java.awt.Graphics;
 // Represents one cell in the grid
 public class BoardCell {
 	private int x, y = 0;
-	private final int CELL_WIDTH = 60, CELL_HEIGHT = 30;
+	public static final int CELL_WIDTH = 80;
+	public static final int CELL_HEIGHT = 30;
 	public String type;
 	private char initial;
 	private DoorDirection direction;
+	private boolean labelRoomHere;
 	// TODO: I don't think anything more needs to be done to this for now
 
-	public BoardCell(int x, int y, char type, char direction) {
+	public BoardCell(int x, int y, char type, char direction, boolean labelRoomHere) {
 		super();
 		this.x = x;
-		this.y = y;		
+		this.y = y;	
+		this.labelRoomHere = labelRoomHere;
 		initial = type;
 		switch (direction){
 		case 'U':
@@ -94,7 +97,7 @@ public class BoardCell {
 
 	public void draw(Graphics g, BoardCell[][] b) {
 		if(this.isWalkway()){
-			g.setColor(Color.YELLOW);
+			g.setColor(Color.CYAN);
 			g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
 			g.setColor(Color.BLACK);
 			g.drawRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH, CELL_HEIGHT);
@@ -132,6 +135,14 @@ public class BoardCell {
 				g.fillRect(CELL_WIDTH*y + ((CELL_WIDTH*11) / 12), CELL_HEIGHT*x, CELL_WIDTH / 12, CELL_HEIGHT);
 			if(this.getDirection() == DoorDirection.LEFT)
 				g.fillRect(CELL_WIDTH*y, CELL_HEIGHT*x, CELL_WIDTH / 12, CELL_HEIGHT);
+		}
+		
+	}
+
+	public void labelRooms(Graphics g, BoardCell[][] board) {
+		if(labelRoomHere){
+			g.setColor(Color.BLACK);
+			g.drawString(Board.rooms.get(initial), CELL_WIDTH*y+2, CELL_HEIGHT*(x+1));
 		}
 	}
 	

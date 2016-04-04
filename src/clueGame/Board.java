@@ -24,7 +24,7 @@ public class Board extends JPanel{
 	private int numDoors = 0;
 	public static final int BOARD_SIZE = 50;
 	private BoardCell[][] board;
-	private static Map<Character, String> rooms;
+	public static Map<Character, String> rooms;
 	private Map<BoardCell, LinkedList<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets = new HashSet<BoardCell>();;
 	private String boardConfigFile;
@@ -38,9 +38,16 @@ public class Board extends JPanel{
 		super.paintComponent(g);
 		for(int r = 0; r < numRows; r++){
 			for(int c = 0; c < numColumns; c++){
-				System.out.println(board[r][c]);
 				board[r][c].draw(g, board);
 			}
+		}
+		for(int r = 0; r < numRows; r++){
+			for(int c = 0; c < numColumns; c++){
+				board[r][c].labelRooms(g, board);
+			}
+		}
+		for(int p = 0; p < players.length; p++){
+			players[p].draw(g, board);
 		}
 	}
 	
@@ -207,6 +214,7 @@ public class Board extends JPanel{
 			temp = in.nextLine();					// Reads in one line at a time
 			Scanner line = new Scanner(temp);
 			line.useDelimiter(",");					// Separates it based on commas
+			boolean labelRoomHere = false;
 			while (line.hasNext()) {
 				String spot = line.next();			// Reads in each letter and...
 				char initial = spot.charAt(0);
@@ -215,12 +223,19 @@ public class Board extends JPanel{
 					direc = spot.charAt(1);
 					numDoors++;
 				}
+				
+				if(Character.isLowerCase(initial)){
+					labelRoomHere = true;
+					initial = Character.toUpperCase(initial);
+				}
+				
 				if (!rooms.keySet().contains(initial)) {
 					line.close();
 					throw new BadConfigFormatException();
 				}
-				board[row][col] = new BoardCell(row, col, initial, direc);	// puts it in the appropriate place on the grid
-				col++;					
+				board[row][col] = new BoardCell(row, col, initial, direc, labelRoomHere);	// puts it in the appropriate place on the grid
+				col++;		
+				labelRoomHere = false;
 			}
 			if (row > 0 && numColumns != col){
 				line.close();
