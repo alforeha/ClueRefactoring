@@ -18,9 +18,7 @@ public class ClueGame extends JFrame{
 		board.initialize();
 		this.setSize(1060, 840);
 		this.add(board);
-		DetectiveNotes d = new DetectiveNotes();
-		d.setSize(700,600);
-		d.setVisible(true);
+		
 	}
 	
 	public static void main(String [] args){
@@ -49,7 +47,9 @@ public class ClueGame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				System.exit(0);
+				DetectiveNotes d = new DetectiveNotes();
+				d.setSize(700,600);
+				d.setVisible(true);
 			}
 
 		}
