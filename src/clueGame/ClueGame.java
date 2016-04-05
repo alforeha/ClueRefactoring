@@ -12,6 +12,8 @@ public class ClueGame extends JFrame{
 	
 	
 	public Board board;
+	public DetectiveNotes d;
+	
 	
 	public ClueGame(){
 		board = new Board();
@@ -19,12 +21,15 @@ public class ClueGame extends JFrame{
 		this.setSize(1060, 840);
 		this.add(board);
 		
+		d = new DetectiveNotes();
+		d.setSize(400, 400);
 	}
 	
 	public static void main(String [] args){
 		ClueGame game = new ClueGame();
 		game.setVisible(true);
 		game.makeMenu();
+		
 	}
 	
 	public void makeMenu(){
@@ -63,8 +68,6 @@ public class ClueGame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				DetectiveNotes d = new DetectiveNotes();
-				d.setSize(700,600);
 				d.setVisible(true);
 			}
 
