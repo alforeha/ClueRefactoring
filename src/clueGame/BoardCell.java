@@ -3,7 +3,6 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 
-// Represents one cell in the grid
 public class BoardCell {
 	private int x, y = 0;
 	public static final int CELL_WIDTH = 80;
@@ -12,7 +11,6 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection direction;
 	private boolean labelRoomHere;
-	// TODO: I don't think anything more needs to be done to this for now
 
 	public BoardCell(int x, int y, char type, char direction, boolean labelRoomHere) {
 		super();

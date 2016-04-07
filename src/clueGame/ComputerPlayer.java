@@ -8,7 +8,6 @@ import java.util.Set;
 public class ComputerPlayer extends Player{
 	public ComputerPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
-		// TODO Auto-generated constructor stub
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets){
 		for (BoardCell b : targets){
@@ -37,8 +36,8 @@ public class ComputerPlayer extends Player{
 	public Solution makeSuggestion(Board board, BoardCell location){
 		Solution guess = new Solution("","",board.getRooms().get(location.getInitial()));
 		
-		ArrayList<Card> coolPeopleToGuess = new ArrayList<Card>();
-		ArrayList<Card> coolWeaponsToGuess = new ArrayList<Card>();
+		ArrayList<Card> guessablePeople = new ArrayList<Card>();
+		ArrayList<Card> guessableWeapons = new ArrayList<Card>();
 		
 		for(Card c : board.getCards()){
 			
@@ -51,24 +50,24 @@ public class ComputerPlayer extends Player{
 			if(!hasBeenSeen){
 				
 				if(c.getType().equals(CardType.PERSON))
-					coolPeopleToGuess.add(c);
+					guessablePeople.add(c);
 				else if(c.getType().equals(CardType.WEAPON))
-					coolWeaponsToGuess.add(c);
+					guessableWeapons.add(c);
 			}
 		}
 		
 		int i = 0;
 		Random rand = new Random();
-		int r = rand.nextInt(coolPeopleToGuess.size());
-		for(Card c : coolPeopleToGuess){
+		int r = rand.nextInt(guessablePeople.size());
+		for(Card c : guessablePeople){
 			if (i == r)
 				guess.person = c.getName();
 			i++;
 		}
 		
 		i = 0;
-		r = rand.nextInt(coolWeaponsToGuess.size());
-		for(Card c : coolWeaponsToGuess){
+		r = rand.nextInt(guessableWeapons.size());
+		for(Card c : guessableWeapons){
 			if (i == r)
 				guess.weapon = c.getName();
 			i++;

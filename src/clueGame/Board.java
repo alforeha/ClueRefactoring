@@ -51,13 +51,6 @@ public class Board extends JPanel{
 		}
 	}
 	
-	public void setPlayers(Player[] players) {
-		this.players = players;
-	}
-	
-	public Player[] getPlayers() {
-		return players;
-	}
 	public Board(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
@@ -68,7 +61,6 @@ public class Board extends JPanel{
 		roomConfigFile = "Legend.txt";
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 	}
-
 	public void initialize() {
 		try {
 			loadRoomConfig();
@@ -145,9 +137,7 @@ public class Board extends JPanel{
 		return answer;
 	}
 	
-	public Card[] getCards() {
-		return cards;
-	}
+
 	private void loadCards() throws FileNotFoundException {
 		cards = new Card[21];
 		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
@@ -192,17 +182,6 @@ public class Board extends JPanel{
 				players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
 			i++;
 		}
-	}
-	public Color convertColor(String strColor) {
-		Color color; 
-		try {     
-			// We can use reflection to convert the string to a color
-			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
-			color = (Color)field.get(null); } 
-		catch (Exception e) {  
-			color = null; // Not defined } 
-		}
-		return color;
 	}
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		// In case the file can't be found
@@ -250,7 +229,6 @@ public class Board extends JPanel{
 		in.close();
 		
 	}
-	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		rooms = new HashMap<Character, String>();			// Initializing a bunch of variables.
 		FileReader fin = new FileReader(roomConfigFile);
@@ -276,6 +254,18 @@ public class Board extends JPanel{
 			line.close();
 		}
 		in.close();
+	}
+
+	public Color convertColor(String strColor) {
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
+		return color;
 	}
 
 	public void calcAdjacencies() {
@@ -355,6 +345,18 @@ public class Board extends JPanel{
 			targets.remove(board[x][y]);
 	}
 
+	public void setPlayers(Player[] players) {
+		this.players = players;
+	}
+	public Card[] getCards() {
+		return cards;
+	}
+	public Player[] getPlayers() {
+		return players;
+	}	
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
 	public int getNumRows() {
 		return numRows;
 	}
@@ -367,20 +369,17 @@ public class Board extends JPanel{
 	public BoardCell[][] getBoard() {
 		return board;
 	}
-	public static Map<Character, String> getRooms() {
-		return rooms;
-	}
-	public Map<BoardCell, LinkedList<BoardCell>> getAdjMatrix() {
-		return adjMatrix;
-	}
-	public Set<BoardCell> getTargets() {
-		return targets;
-	}
 	public String getBoardConfigFile() {
 		return boardConfigFile;
 	}
 	public String getRoomConfigFile() {
 		return roomConfigFile;
+	}
+	public static Map<Character, String> getRooms() {
+		return rooms;
+	}
+	public Map<BoardCell, LinkedList<BoardCell>> getAdjMatrix() {
+		return adjMatrix;
 	}
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
