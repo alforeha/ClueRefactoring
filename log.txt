@@ -1,3 +1,44 @@
+Mostly worked on Clayton's computer so that's why most commits are from Clayton.
+
+commit fe7d1ffcb39509fe96453420f09a7421db99c1d2
+Merge: 1defdad 3ac7662
+Author: Clayton Howeth <choweth@mymail.mines.edu>
+Date:   Mon Apr 4 23:25:09 2016 -0600
+
+    Merge branch 'master' of https://github.com/yo-fray/ClueRepo2
+    
+    We goofed
+
+commit 1defdad8823f31d748fcacc816e47ae2051aa6d5
+Author: Clayton Howeth <choweth@mymail.mines.edu>
+Date:   Mon Apr 4 23:17:00 2016 -0600
+
+    ClueGUI Finished.
+
+commit 3ac766279be19b60af67ff84a2db75bcfec9f4d5
+Author: Jeffrey Nichols <jnichols@mymail.mines.edu>
+Date:   Mon Apr 4 23:15:53 2016 -0600
+
+    changed notes instantiation so not overwritten every time opened
+
+commit 830eaabfce64460c7ec7262ee79101de7dc8b20e
+Author: Jeffrey Nichols <jnichols@mymail.mines.edu>
+Date:   Mon Apr 4 23:08:29 2016 -0600
+
+    added exit to menu.  tested
+
+commit c966cfa8056bc2ae184c96a8563598ac18e91722
+Author: Jeffrey Nichols <jnichols@mymail.mines.edu>
+Date:   Mon Apr 4 23:05:38 2016 -0600
+
+    tested code for file menu. pulls up menu when clicked. Further testing needed. Computer dying!
+
+commit 3fd82b2505e3fbed3ce720f975b351af4c89ecc2
+Author: Jeffrey Nichols <jnichols@mymail.mines.edu>
+Date:   Mon Apr 4 23:01:20 2016 -0600
+
+    added untested code for file menu
+
 commit 53c6c3e6f6b1c16eb785281365d16e7e902a5508
 Author: Clayton Howeth <choweth@mymail.mines.edu>
 Date:   Mon Apr 4 22:47:56 2016 -0600
