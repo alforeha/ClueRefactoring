@@ -1,4 +1,14 @@
-Mostly worked on Clayton's computer so that's why most commits are from Clayton.
+commit 4e4a2248270de0ef5146c4ffa28687143b4b1c03
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Thu Apr 7 16:03:20 2016 -0600
+
+    Finished refactoring Board.java
+
+commit 4d9507ec65913e08d77c5e9c880740194f331bd8
+Author: unknown <alforeha@BB316B-20.adit.mines.edu>
+Date:   Thu Apr 7 15:46:46 2016 -0600
+
+    Found unused variables within Board class. Deleted.
 
 commit fe7d1ffcb39509fe96453420f09a7421db99c1d2
 Merge: 1defdad 3ac7662
