@@ -1,3 +1,15 @@
+commit 56252a6450c49e44f18443d2fbd71119b841963f
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Thu Apr 7 16:17:44 2016 -0600
+
+    Organized and cleaned up Player.java
+
+commit 799732d56eda1dec50ce598778b19b3aa32516a7
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Thu Apr 7 16:13:31 2016 -0600
+
+    Reviewed ComputerPlayer.java and cleaned up comments. Changed unprofessional variable names.
+
 commit b147d854727b8d7730ad18ff175bca82179a4809
 Author: Alex Forehand <alforeha@mymail.mines.edu>
 Date:   Thu Apr 7 16:08:18 2016 -0600

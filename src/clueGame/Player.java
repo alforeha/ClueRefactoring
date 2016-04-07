@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public Color getColor() {
-		// TODO Auto-generated method stub
+
 		return color;
 	}
 
