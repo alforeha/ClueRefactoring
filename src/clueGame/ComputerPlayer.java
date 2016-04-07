@@ -11,7 +11,7 @@ public class ComputerPlayer extends Player{
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets){
 		for (BoardCell b : targets){
-			if (b.isDoorway() && (b.getX() != prevRow || b.getY() != prevCol)){
+			if (b.isDoorway() && (b.getRow() != prevRow || b.getColumn() != prevCol)){
 				return b;
 			}
 		}

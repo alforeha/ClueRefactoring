@@ -52,8 +52,8 @@ public class Player {
 	public void setLocation(BoardCell b){
 		prevRow = row;
 		prevCol = column;
-		row = b.getX();
-		column = b.getY();
+		row = b.getRow();
+		column = b.getColumn();
 	}
 
 	public Color getColor() {

@@ -204,7 +204,7 @@ public class GameActionTests {
 		boolean loc_14_1 = false;
 		BoardCell selected = player.pickLocation(board.getTargets());
 		player.setLocation(selected);
-		board.calcTargets(selected.getX(), selected.getY(), 1);
+		board.calcTargets(selected.getRow(), selected.getColumn(), 1);
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			selected = player.pickLocation(board.getTargets());

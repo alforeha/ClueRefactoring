@@ -77,11 +77,11 @@ public class BoardCell {
 		return initial;
 	}
 
-	public int getX() {
+	public int getRow() {
 		return row;
 	}
 
-	public int getY() {
+	public int getColumn() {
 		return column;
 	}
 
