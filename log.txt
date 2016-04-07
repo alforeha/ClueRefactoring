@@ -1,3 +1,9 @@
+commit b147d854727b8d7730ad18ff175bca82179a4809
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Thu Apr 7 16:08:18 2016 -0600
+
+    Commit take 2 for BoardCell refactor
+
 commit 4e4a2248270de0ef5146c4ffa28687143b4b1c03
 Author: Alex Forehand <alforeha@mymail.mines.edu>
 Date:   Thu Apr 7 16:03:20 2016 -0600
