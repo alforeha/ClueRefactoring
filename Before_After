@@ -1,0 +1,65 @@
+// OLD CODE POORLY HARD-CODED
+@before
+private JPanel createRoomGuessPanel() {
+		JPanel panel = new JPanel();
+		//panel.setLayout(new GridLayout(0,2));
+		JComboBox<String> b = new JComboBox<>();
+		b.addItem("Conservatory");
+		b.addItem("Kitchen");
+		b.addItem("Ballroom");
+		b.addItem("Billiard Room");
+		b.addItem("Library");
+		b.addItem("Study");
+		b.addItem("Dining Room");
+		b.addItem("Lounge");
+		b.addItem("Hall");
+		panel.add(b);
+		panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+		return panel;
+	}
+
+
+// REFACTORED, CLEAN SOFT-CODED
+@after
+	private JPanel createGuessPanel() {
+		JPanel guessPanel = new JPanel();
+		guessPanel.setLayout(new GridLayout(3,0));
+
+		ArrayList<Card> roomCards = new ArrayList<Card>();
+		ArrayList<Card> weaponCards = new ArrayList<Card>();
+		ArrayList<Card> personCards = new ArrayList<Card>();
+
+		for ( Card card : board.getBackup()){
+			if (card.getType() == CardType.PERSON){
+				personCards.add(card);
+			}
+			if (card.getType() == CardType.WEAPON){
+				weaponCards.add(card);
+			}
+			if (card.getType() == CardType.ROOM){
+				roomCards.add(card);
+			}
+		}
+
+		JComboBox<String> rooms = new JComboBox<>();
+		JComboBox<String> weapons = new JComboBox<>();
+		JComboBox<String> persons = new JComboBox<>();
+
+		for ( Card card : personCards){
+			persons.addItem(card.getName());
+		}
+		persons.setBorder(new TitledBorder (new EtchedBorder(), "Person Guess"));
+		for ( Card card : weaponCards){
+			weapons.addItem(card.getName());
+		}
+		weapons.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+		for ( Card card : roomCards){
+			rooms.addItem(card.getName());
+		}
+		rooms.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+		guessPanel.add(persons);
+		guessPanel.add(weapons);
+		guessPanel.add(rooms);
+
+		return guessPanel;
+	}

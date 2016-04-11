@@ -1,3 +1,28 @@
+commit fe7d2cf6ae9a37118f1fece7ddd0f639d2a3ed91
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Mon Apr 11 13:54:46 2016 -0600
+
+    Finished Game GUI
+
+commit 5e4cf6f7d76b48605b1342ee7f24b35231456555
+Merge: 963d008 6110c58
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Mon Apr 11 13:11:55 2016 -0600
+
+    Fixed Merge Errors
+
+commit 6110c58d8fb5d25a78bca37cef4a350e2c662e0a
+Author: Clayton Howeth <choweth@mymail.mines.edu>
+Date:   Mon Apr 11 13:04:28 2016 -0600
+
+    Worked towards New GUI Config. REALLY Added ControlGUI.
+
+commit eb0904a0705c02f2d271389476f40d096545bb05
+Author: Clayton Howeth <choweth@mymail.mines.edu>
+Date:   Mon Apr 11 13:04:02 2016 -0600
+
+    Worked towards New GUI Config. Added ControlGUI.
+
 commit 963d0088b4f230f4e6671fdbfdf3f4e8dc6aec23
 Author: Alex Forehand <alforeha@mymail.mines.edu>
 Date:   Mon Apr 11 13:02:01 2016 -0600
