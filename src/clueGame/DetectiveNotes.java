@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -11,128 +12,108 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class DetectiveNotes extends JDialog{
+
+	private Board board = new Board();
+
 	public DetectiveNotes(){
-		setLayout(new GridLayout(3,2));
-		JPanel panel = createPeopleSeenPanel();
-		add(panel);
-		panel = createPeopleGuessPanel();
-		add(panel);
-		panel = createWeaponSeenPanel();
-		add(panel);
-		panel = createWeaponGuessPanel();
-		add(panel);
-		panel = createRoomSeenPanel();
-		add(panel);
-		panel = createRoomGuessPanel();
-		add(panel);
+		setLayout(new GridLayout(1,1));
+		JPanel guessPanel = createGuessPanel();
+		JPanel seenPanel = createSeenPanel();
+		add(seenPanel);
+		add(guessPanel);
 	}
 
-	private JPanel createRoomGuessPanel() {
-		JPanel panel = new JPanel();
-		//panel.setLayout(new GridLayout(0,2));
-		JComboBox<String> b = new JComboBox<>();
-		b.addItem("Conservatory");
-		b.addItem("Kitchen");
-		b.addItem("Ballroom");
-		b.addItem("Billiard Room");
-		b.addItem("Library");
-		b.addItem("Study");
-		b.addItem("Dining Room");
-		b.addItem("Lounge");
-		b.addItem("Hall");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
-		return panel;
+	private JPanel createSeenPanel() {
+		JPanel seenPanel = new JPanel();
+		seenPanel.setLayout(new GridLayout(3,0));
+
+		ArrayList<Card> roomCards = new ArrayList<Card>();
+		ArrayList<Card> weaponCards = new ArrayList<Card>();
+		ArrayList<Card> personCards = new ArrayList<Card>();
+
+		for ( Card card : board.getBackup()){
+			if (card.getType() == CardType.PERSON){
+				personCards.add(card);
+			}
+			if (card.getType() == CardType.WEAPON){
+				weaponCards.add(card);
+			}
+			if (card.getType() == CardType.ROOM){
+				roomCards.add(card);
+			}
+		}
+	
+		JPanel seenPersons = new JPanel();
+		seenPersons.setLayout(new GridLayout(4,0));
+		JPanel seenWeapons = new JPanel();
+		seenWeapons.setLayout(new GridLayout(4,0));
+		JPanel seenRooms = new JPanel();
+		seenRooms.setLayout(new GridLayout(4,0));
+		
+		for ( Card card : personCards){
+			JCheckBox persons = new JCheckBox();
+			persons.setText(card.getName());
+			seenPersons.add(persons);
+		}
+		seenPersons.setBorder(new TitledBorder (new EtchedBorder(), "Persons"));
+		for ( Card card : weaponCards){
+			JCheckBox weapons = new JCheckBox();
+			weapons.setText(card.getName());
+			seenWeapons.add(weapons);
+		}
+		seenWeapons.setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
+		for ( Card card : roomCards){
+			JCheckBox rooms = new JCheckBox();
+			rooms.setText(card.getName());
+			seenRooms.add(rooms);
+		}
+		seenRooms.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
+		seenPanel.add(seenPersons);
+		seenPanel.add(seenWeapons);
+		seenPanel.add(seenRooms);
+		return seenPanel;
 	}
 
-	private JPanel createRoomSeenPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0,2));
-		JCheckBox b = new JCheckBox("Conservatory");
-		panel.add(b);
-		b = new JCheckBox("Kitchen");
-		panel.add(b);
-		b = new JCheckBox("Ballroom");
-		panel.add(b);
-		b = new JCheckBox("Billiard Room");
-		panel.add(b);
-		b = new JCheckBox("Library");
-		panel.add(b);
-		b = new JCheckBox("Study");
-		panel.add(b);
-		b = new JCheckBox("Dining Room");
-		panel.add(b);
-		b = new JCheckBox("Lounge");
-		panel.add(b);
-		b = new JCheckBox("Hall");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
-		return panel;
-	}
+	private JPanel createGuessPanel() {
+		JPanel guessPanel = new JPanel();
+		guessPanel.setLayout(new GridLayout(3,0));
 
-	private JPanel createWeaponGuessPanel() {
-		JPanel panel = new JPanel();
-		JComboBox<String> b = new JComboBox<>();
-		b.addItem("Knife");
-		b.addItem("Lead Pipe");
-		b.addItem("Revolver");
-		b.addItem("Rope");
-		b.addItem("Wrench");
-		b.addItem("Candle Stick");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
-		return panel;
-	}
+		ArrayList<Card> roomCards = new ArrayList<Card>();
+		ArrayList<Card> weaponCards = new ArrayList<Card>();
+		ArrayList<Card> personCards = new ArrayList<Card>();
 
-	private JPanel createWeaponSeenPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0,2));
-		JCheckBox b = new JCheckBox("Knife");
-		panel.add(b);
-		b = new JCheckBox("Lead Pipe");
-		panel.add(b);
-		b = new JCheckBox("Revolver");
-		panel.add(b);
-		b = new JCheckBox("Rope");
-		panel.add(b);
-		b = new JCheckBox("Wrench");
-		panel.add(b);
-		b = new JCheckBox("Candlestick");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
-		return panel;
-	}
+		for ( Card card : board.getBackup()){
+			if (card.getType() == CardType.PERSON){
+				personCards.add(card);
+			}
+			if (card.getType() == CardType.WEAPON){
+				weaponCards.add(card);
+			}
+			if (card.getType() == CardType.ROOM){
+				roomCards.add(card);
+			}
+		}
 
-	private JPanel createPeopleGuessPanel() {
-		JPanel panel = new JPanel();
-		JComboBox<String> b = new JComboBox<>();
-		b.addItem("Professor Periwinkle");
-		b.addItem("Mrs. Peacock");
-		b.addItem("Miss Scarlett");
-		b.addItem("Mr. Green");
-		b.addItem("Colonel Mustard");
-		b.addItem("Mrs. White");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
-		return panel;
-	}
+		JComboBox<String> rooms = new JComboBox<>();
+		JComboBox<String> weapons = new JComboBox<>();
+		JComboBox<String> persons = new JComboBox<>();
 
-	private JPanel createPeopleSeenPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0,2));
-		JCheckBox b = new JCheckBox("Professor Periwinkle");
-		panel.add(b);
-		b = new JCheckBox("Mrs. Peacock");
-		panel.add(b);
-		b = new JCheckBox("Miss Scarlett");
-		panel.add(b);
-		b = new JCheckBox("Mr. Green");
-		panel.add(b);
-		b = new JCheckBox("Colonel Mustard");
-		panel.add(b);
-		b = new JCheckBox("Mrs. White");
-		panel.add(b);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "People"));
-		return panel;
+		for ( Card card : personCards){
+			persons.addItem(card.getName());
+		}
+		persons.setBorder(new TitledBorder (new EtchedBorder(), "Person Guess"));
+		for ( Card card : weaponCards){
+			weapons.addItem(card.getName());
+		}
+		weapons.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+		for ( Card card : roomCards){
+			rooms.addItem(card.getName());
+		}
+		rooms.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+		guessPanel.add(persons);
+		guessPanel.add(weapons);
+		guessPanel.add(rooms);
+
+		return guessPanel;
 	}
 }

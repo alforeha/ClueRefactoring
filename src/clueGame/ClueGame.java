@@ -18,11 +18,10 @@ public class ClueGame extends JFrame{
 	public ClueGame(){
 		board = new Board();
 		board.initialize();
-		this.setSize(1060, 840);
-		this.add(board);
-		
+	setSize(1060, 840);
+		add(board);
 		d = new DetectiveNotes();
-		d.setSize(400, 400);
+		d.setSize(700, 400);
 	}
 	
 	public static void main(String [] args){

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -31,7 +32,12 @@ public class Board extends JPanel{
 	private String roomConfigFile;
 	private Player[] players;
 	private Card[] cards;
+	public 	ArrayList<Card> backup = new ArrayList<Card>();
 	public Solution solution;
+
+	public ArrayList<Card> getBackup() {
+		return backup;
+	}
 
 	//@Override
 	public void paintComponent(Graphics g){
@@ -51,6 +57,10 @@ public class Board extends JPanel{
 		}
 	}
 	
+	
+	
+	
+	
 	public Board(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
@@ -60,6 +70,7 @@ public class Board extends JPanel{
 		boardConfigFile = "Clue Layout.csv";
 		roomConfigFile = "Legend.txt";
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
+		initialize();
 	}
 	public void initialize() {
 		try {
@@ -83,11 +94,6 @@ public class Board extends JPanel{
 	}
 	
 	private void dealCards() {
-		Card[] backup = new Card[21];
-		for(int i = 0; i < 21 ; i++){
-			backup[i] = cards[i];
-		}
-		
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(6);
 		int solutionWeapon = rand.nextInt(6) + 6;
@@ -114,9 +120,6 @@ public class Board extends JPanel{
 			}
 		}
 		
-		for(int i = 0; i < 21 ; i++){
-			cards[i] = backup[i];
-		}
 	}
 	
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
@@ -143,7 +146,6 @@ public class Board extends JPanel{
 		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
 		String temp;
-		
 		for(int i = 0; i < 6; i++){
 			temp = in.nextLine();
 			cards[i] = new Card(CardType.PERSON, temp);
@@ -156,10 +158,9 @@ public class Board extends JPanel{
 			temp = in.nextLine();
 			cards[i+12] = new Card(CardType.ROOM, temp);
 		}
-		
-		//for(int i = 0; i < 21; i++){
-		//	cards[i] = new Card(CardType.PERSON, "Card");
-		//}
+		for(int i = 0; i < 21 ; i++){
+			backup.add(cards[i]);
+		}	
 	}
 	private void loadPlayers() throws FileNotFoundException{
 		players = new Player[6];
