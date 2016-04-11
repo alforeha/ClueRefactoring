@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,13 +14,19 @@ public class ClueGame extends JFrame{
 	
 	public Board board;
 	public DetectiveNotes d;
+	public ControlGUI cg;
 	
 	
 	public ClueGame(){
 		board = new Board();
 		board.initialize();
-	setSize(1060, 840);
+		setSize(1060, 840);
 		add(board);
+		setSize(1060, 840);
+		add(board, BorderLayout.NORTH);
+		cg = new ControlGUI();
+		add(cg, BorderLayout.SOUTH);
+		add(cg, BorderLayout.NORTH);
 		d = new DetectiveNotes();
 		d.setSize(700, 400);
 	}
@@ -29,6 +36,11 @@ public class ClueGame extends JFrame{
 		game.setVisible(true);
 		game.makeMenu();
 		
+	}
+	
+	public void addControlGUI(){
+		ControlGUI cg = new ControlGUI();
+		add(cg, BorderLayout.SOUTH);
 	}
 	
 	public void makeMenu(){
