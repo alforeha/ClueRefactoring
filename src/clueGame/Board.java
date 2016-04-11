@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
@@ -50,7 +51,6 @@ public class Board extends JPanel{
 			players[p].draw(g, board);
 		}
 	}
-	
 	public void setPlayers(Player[] players) {
 		this.players = players;
 	}
