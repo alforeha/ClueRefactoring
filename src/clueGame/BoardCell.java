@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class BoardCell {
 	private int row, column = 0;
 	public static final int CELL_WIDTH = 80;
-	public static final int CELL_HEIGHT = 30;
+	public static final int CELL_HEIGHT = 20;
 	public String type;
 	private char initial;
 	private DoorDirection direction;

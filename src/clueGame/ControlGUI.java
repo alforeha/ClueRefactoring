@@ -18,6 +18,7 @@ public class ControlGUI extends JPanel {
 	public ControlGUI()
 	{
 		// Create a layout with 2 rows
+		setSize(600,300);
 		setLayout(new GridLayout(5,0));
 		JPanel panel = createButtonPanel();
 		add(panel);
@@ -96,7 +97,7 @@ public class ControlGUI extends JPanel {
 		return panel;
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,5 +109,5 @@ public class ControlGUI extends JPanel {
 		// Now let's view it
 		frame.setVisible(true);
 	}
-
+*/
 }
