@@ -31,6 +31,7 @@ public class ClueGame extends JFrame implements MouseListener{
 	public DetectiveNotes d;
 	public ControlGUI cg;
 	private static final int DIE = 6;
+	private boolean ifDone = false;
 
 
 	public ClueGame(){
@@ -62,46 +63,49 @@ public class ClueGame extends JFrame implements MouseListener{
 	}
 
 
-	public void doTurn() {
-		boolean ifDone = false;
+	public boolean doTurn(Player player) {
+		ifDone = false;
 		if(!ifDone){
-			String playerName = board.getPlayers()[board.getCount()].getPlayerName();
-			int row = board.getPlayers()[board.getCount()].getRow();
-			int col =board.getPlayers()[board.getCount()].getCol();
-			Color color = board.getPlayers()[board.getCount()].getColor();
-		
-			cg.setRoll(rollDie());
-			cg.setPlayerName(playerName);
-			cg.rollField.setText(Integer.toString(cg.getRoll()));
-			cg.nameField.setText(playerName);
+			String playerName = player.getPlayerName();
+			 int row = player.getRow();
+			 int col = player.getCol();
+			 Color color = player.getColor();
+			 cg.setRoll(rollDie());
+			 cg.setPlayerName(playerName);
+			 cg.rollField.setText(Integer.toString(cg.getRoll()));
+			 cg.nameField.setText(playerName);
 
-			if (board.getPlayers()[board.getCount()].getClass() == HumanPlayer.class){			
-				board.calcTargets(row, col, cg.getRoll());
-				Set<BoardCell> targets = board.getTargets();
-				board.drawTargets(board.getGraphics());
-			}
-			if (board.getPlayers()[board.getCount()].getClass() == ComputerPlayer.class){
+			 if (player.getClass() == HumanPlayer.class){			
+				 board.calcTargets(row, col, cg.getRoll());
+				 Set<BoardCell> targets = board.getTargets();
+				 board.drawTargets(board.getGraphics());		
+				
+			 }
 
-				ComputerPlayer playerTurn = new ComputerPlayer(playerName,row,col,color);
+			 if (player.getClass() == ComputerPlayer.class){
 
-				board.calcTargets(row, col, cg.getRoll());
-				Set targets = board.getTargets();
+				 ComputerPlayer playerTurn = new ComputerPlayer(playerName,row,col,color);
 
-				if(playerTurn.getSeenCards().size() == board.getBackup().size()-3){
-					playerTurn.makeAccusation();
-				}
+				 board.calcTargets(row, col, cg.getRoll());
+				 Set targets = board.getTargets();
 
-				BoardCell picked = playerTurn.pickLocation(targets);
-				if (picked.isDoorway()){
-					Solution guess = playerTurn.makeSuggestion(board, picked);
-					playerTurn.seeCard(board.handleSuggestion(guess,playerTurn.getPlayerName(),picked));
-				}
+				 if(playerTurn.getSeenCards().size() == board.getBackup().size()-3){
+					 playerTurn.makeAccusation();
+				 }
 
-			}
+				 BoardCell picked = playerTurn.pickLocation(targets);
+				 if (picked.isDoorway()){
+					 Solution guess = playerTurn.makeSuggestion(board, picked);
+					 playerTurn.seeCard(board.handleSuggestion(guess,playerTurn.getPlayerName(),picked));
+				 }
+
+			 }
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "You are Miss Scarlett, press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		}
+		
+		return ifDone;
 	}
 
 
@@ -209,14 +213,10 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if(board.getNumColumns()*BoardCell.CELL_WIDTH > arg0.getX() || board.getNumRows()*BoardCell.CELL_HEIGHT > arg0.getY()){
-//System.out.println(board.getNumColumns()*BoardCell.CELL_WIDTH +  " " + board.getNumRows()*BoardCell.CELL_HEIGHT);
+		if(board.getNumColumns()*BoardCell.CELL_WIDTH > arg0.getX() && board.getNumRows()*BoardCell.CELL_HEIGHT > arg0.getY()){
 			BoardCell whichCell = null;
 			for (BoardCell cell : board.getTargets()){
-				//System.out.println();
-				//System.out.println(Integer.toString(arg0.getX()) + " " +Integer.toString(arg0.getY()));
-				//System.out.println(cell.CELL_WIDTH * cell.getColumn() + " " + cell.CELL_HEIGHT*cell.getRow() );
-				//System.out.println();
+
 				if (containsClick(arg0.getX()-6,arg0.getY()-BoardCell.CELL_HEIGHT-20, cell)){
 					whichCell = cell;
 					break;
@@ -225,6 +225,7 @@ public class ClueGame extends JFrame implements MouseListener{
 			if (whichCell != null){
 				board.getPlayers()[board.getCount()].setLocation(whichCell);
 				repaint();
+				ifDone = true;
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);

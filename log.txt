@@ -1,3 +1,9 @@
+commit 62b9be5f4367c074e03d3caf70c223a8a6dbcf3f
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Wed Apr 13 15:23:05 2016 -0600
+
+    Can move human player around board. Name and roll also appear on display.
+
 commit 947e85d86b43b0f04df3d7d39ffb11a3702cc4f2
 Author: Alex Forehand <alforeha@mymail.mines.edu>
 Date:   Mon Apr 11 13:59:01 2016 -0600

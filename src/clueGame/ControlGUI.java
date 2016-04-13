@@ -63,9 +63,9 @@ public class ControlGUI extends JPanel {
 		add(guessPanel);
 		add(resultPanel);
 	}
-	
+
 	public void updateControl(){
-				
+
 	}
 
 	private JPanel createWhosTurnPanel() {
@@ -90,7 +90,7 @@ public class ControlGUI extends JPanel {
 		rollField.setEditable(false);
 		panel.add(nameLabel);
 		panel.add(rollField);
-		
+
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
 	}
@@ -129,10 +129,11 @@ public class ControlGUI extends JPanel {
 		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				game.doTurn();
-				
-			}
+			public void actionPerformed(ActionEvent e) {	
+				if(game.doTurn(board.getPlayers()[game.board.getCount()]))
+					board.nextPlayer();
+			}				
+
 		});
 
 

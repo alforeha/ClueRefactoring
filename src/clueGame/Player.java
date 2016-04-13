@@ -26,6 +26,10 @@ public class Player {
 		seenCards = new HashSet<Card>();
 	}
 
+	public void play(){
+		
+	}
+	
 	public Card disproveSuggestion(Solution suggestion){
 		
 		ArrayList<Card> possibilities = new ArrayList<Card>();
