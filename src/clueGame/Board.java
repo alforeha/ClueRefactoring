@@ -32,6 +32,7 @@ public class Board extends JPanel{
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private Player[] players;
+	private int count = 0;
 	private Card[] cards;
 	public 	ArrayList<Card> backup = new ArrayList<Card>();
 	public Solution solution;
@@ -56,7 +57,11 @@ public class Board extends JPanel{
 		for(int p = 0; p < players.length; p++){
 			players[p].draw(g, board);
 		}
+	
+	
 	}
+	
+	
 	
 	
 	public Board(String layout, String legend) {
@@ -343,6 +348,14 @@ public class Board extends JPanel{
 		if(targets.contains(board[x][y]))
 			targets.remove(board[x][y]);
 	}
+	
+	public void drawTargets(Graphics g){
+		for (BoardCell cell : targets){
+			g.setColor(Color.RED);
+			g.fillRect(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);		
+		}
+	}
+
 
 	public void setPlayers(Player[] players) {
 		this.players = players;
@@ -392,4 +405,14 @@ public class Board extends JPanel{
 	public int getNumDoors() {
 		return numDoors;
 	}
+
+	public void nextPlayer() {
+		count++;
+		count = count % players.length;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
 }

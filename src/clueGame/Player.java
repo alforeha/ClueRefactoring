@@ -18,7 +18,6 @@ public class Player {
 	protected int prevCol;
 	
 	public Player(String playerName, int row, int column, Color color) {
-		
 		this.playerName = playerName;
 		this.row = row;
 		this.column = column;
@@ -105,5 +104,11 @@ public class Player {
 	public void draw(Graphics g, BoardCell[][] board) {
 		g.setColor(color);
 		g.fillOval((int)(((double)column + (0.3))*(double)BoardCell.CELL_WIDTH), row*BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT);
+		g.setColor(Color.BLACK);
+		g.drawOval((int)(((double)column + (0.3))*(double)BoardCell.CELL_WIDTH), row*BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT, BoardCell.CELL_HEIGHT);
+	}
+
+	public Set<Card> getSeenCards() {
+		return seenCards;
 	}
 }

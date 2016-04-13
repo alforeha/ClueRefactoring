@@ -2,6 +2,10 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,24 +16,56 @@ import javax.swing.JTextPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+
 public class ControlGUI extends JPanel {
 	private JTextField name;
+	public JTextField rollField;
+	public JTextField nameField;
+	private ClueGame game;
+	private String playerName;	
+	private int roll;
+	private JPanel diePanel;
+	private JPanel whoseTurnPanel;
+	private JPanel guessPanel;
+	private JPanel resultPanel;
 
-	public ControlGUI()
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	public int getRoll() {
+		return roll;
+	}
+
+	public void setRoll(int roll) {
+		this.roll = roll;
+	}
+
+	public ControlGUI(ClueGame game)
 	{
-		// Create a layout with 2 rows
+		this.game = game;
+
 		setSize(600,300);
 		setLayout(new GridLayout(5,0));
-		JPanel panel = createButtonPanel();
+		JPanel panel = createButtonPanel(game.board);
+
+		whoseTurnPanel = createWhosTurnPanel();
+
+		diePanel = createDicePanel();
+
+		guessPanel = createGuessPanel();
+
+		resultPanel = createGuessResultPanel();
 		add(panel);
-		panel = createWhosTurnPanel();
-		add(panel);
-		panel = createDicePanel();
-		add(panel);
-		panel = createGuessPanel();
-		add(panel);
-		panel = createGuessResultPanel();
-		add(panel);
+		add(whoseTurnPanel);
+		add(diePanel);
+		add(guessPanel);
+		add(resultPanel);
+	}
+	
+	public void updateControl(){
+				
 	}
 
 	private JPanel createWhosTurnPanel() {
@@ -37,10 +73,10 @@ public class ControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		//panel.setLayout(new GridLayout(1,1));
 		//JLabel nameLabel = new JLabel("");
-		name = new JTextField(20);
-		name.setEditable(false);
+		nameField = new JTextField(20);
+		nameField.setEditable(false);
 		//panel.add(nameLabel);
-		panel.add(name);
+		panel.add(nameField);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Who's Turn?"));
 		return panel;
 	}
@@ -50,10 +86,11 @@ public class ControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		//panel.setLayout(new GridLayout(2,1));
 		JLabel nameLabel = new JLabel("Roll");
-		name = new JTextField(20);
-		name.setEditable(false);
+		rollField = new JTextField(Integer.toString(roll));
+		rollField.setEditable(false);
 		panel.add(nameLabel);
-		panel.add(name);
+		panel.add(rollField);
+		
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
 	}
@@ -85,9 +122,20 @@ public class ControlGUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel createButtonPanel() {
+	private JPanel createButtonPanel(Board board) {
 		// no layout specified, so this is flow
 		JButton agree = new JButton("Next Player");
+		agree.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				game.doTurn();
+				
+			}
+		});
+
+
 		JButton disagree = new JButton("Make An Accusation");
 		JPanel panel = new JPanel();
 		//panel.setLayout(new GridLayout(1, 2));
@@ -97,17 +145,14 @@ public class ControlGUI extends JPanel {
 		return panel;
 	}
 
-/*	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Control Panel");
-		frame.setSize(400, 300);	
-		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI();
-		frame.add(gui, BorderLayout.CENTER);
-		// Now let's view it
-		frame.setVisible(true);
+	class MenuItemListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			System.exit(0);
+		}
+
 	}
-*/
+
+
 }

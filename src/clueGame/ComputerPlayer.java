@@ -47,8 +47,7 @@ public class ComputerPlayer extends Player{
 					hasBeenSeen = true;
 			}
 			
-			if(!hasBeenSeen){
-				
+			if(!hasBeenSeen){				
 				if(c.getType().equals(CardType.PERSON))
 					guessablePeople.add(c);
 				else if(c.getType().equals(CardType.WEAPON))

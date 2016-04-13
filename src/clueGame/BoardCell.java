@@ -95,7 +95,7 @@ public class BoardCell {
 
 	public void draw(Graphics g, BoardCell[][] b) {
 		if(this.isWalkway()){
-			g.setColor(Color.CYAN);
+			g.setColor(Color.CYAN);			
 			g.fillRect(CELL_WIDTH*column, CELL_HEIGHT*row, CELL_WIDTH, CELL_HEIGHT);
 			g.setColor(Color.BLACK);
 			g.drawRect(CELL_WIDTH*column, CELL_HEIGHT*row, CELL_WIDTH, CELL_HEIGHT);
@@ -133,7 +133,16 @@ public class BoardCell {
 				g.fillRect(CELL_WIDTH*column, CELL_HEIGHT*row, CELL_WIDTH / 12, CELL_HEIGHT);
 		}
 		
+		
 	}
+	
+	public void drawTargets(Graphics g, BoardCell[][] b){
+		g.setColor(Color.RED);			
+		g.fillRect(CELL_WIDTH*column, CELL_HEIGHT*row, CELL_WIDTH, CELL_HEIGHT);
+		g.setColor(Color.BLACK);
+		g.drawRect(CELL_WIDTH*column, CELL_HEIGHT*row, CELL_WIDTH, CELL_HEIGHT);
+	}
+
 
 	public void labelRooms(Graphics g, BoardCell[][] board) {
 		if(labelRoomHere){

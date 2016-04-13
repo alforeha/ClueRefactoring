@@ -1,3 +1,9 @@
+commit 947e85d86b43b0f04df3d7d39ffb11a3702cc4f2
+Author: Alex Forehand <alforeha@mymail.mines.edu>
+Date:   Mon Apr 11 13:59:01 2016 -0600
+
+    Tracked correct files
+
 commit fe7d2cf6ae9a37118f1fece7ddd0f639d2a3ed91
 Author: Alex Forehand <alforeha@mymail.mines.edu>
 Date:   Mon Apr 11 13:54:46 2016 -0600
