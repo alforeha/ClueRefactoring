@@ -10,8 +10,10 @@ public class ComputerPlayer extends Player{
 		super(playerName, row, column, color);
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets){
+
 		for (BoardCell b : targets){
 			if (b.isDoorway() && (b.getRow() != prevRow || b.getColumn() != prevCol)){
+				setLocation(b);
 				return b;
 			}
 		}
@@ -42,8 +44,12 @@ public class ComputerPlayer extends Player{
 		
 		for(Card c : board.getCards()){
 			
+			
 			boolean hasBeenSeen = false;
+			System.out.println(seenCards.size());
 			for(Card seen : seenCards){
+				System.out.println(seen.getName());
+			
 				if(seen.getName().equals(c.getName()))
 					hasBeenSeen = true;
 			}

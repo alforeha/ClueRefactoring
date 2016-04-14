@@ -90,19 +90,27 @@ public class ClueGame extends JFrame implements MouseListener{
 
 			if (player.getClass() == ComputerPlayer.class){
 
-				//ComputerPlayer playerTurn = new ComputerPlayer(playerName,row,col,color);
 
 				board.calcTargets(row, col, cg.getRoll());
+				
+				if (player.getPlayerName() == "Professor Periwinkle"){
+					System.out.println("wtf");
+				}
+
+				
+				
+				((ComputerPlayer) player).pickLocation(board.getTargets());
+				
+			//	if (picked.isDoorway() && picked !=null){
+				//	System.out.println(picked.getType());
+			//		Solution guess = ((ComputerPlayer) player).makeSuggestion(board, picked);
+			//		player.seeCard(board.handleSuggestion(guess,player.getPlayerName(),picked));
+			//	}
 				
 				if(player.getSeenCards().size() == board.getBackup().size()-3){
 					((ComputerPlayer) player).makeAccusation();
 				}
-
-				BoardCell picked = ((ComputerPlayer) player).pickLocation(board.getTargets());
-				if (picked.isDoorway()){
-					Solution guess = ((ComputerPlayer) player).makeSuggestion(board, picked);
-					player.seeCard(board.handleSuggestion(guess,player.getPlayerName(),picked));
-				}
+				
 				board.repaint();
 				board.setTurnOver(true);
 			}

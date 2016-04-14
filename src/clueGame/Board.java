@@ -115,6 +115,7 @@ public class Board extends JPanel implements MouseListener{
 		int solutionRoom = rand.nextInt(9) + 12;
 		
 		solution = new Solution(cards[solutionPlayer].getName(), cards[solutionWeapon].getName(), cards[solutionRoom].getName());
+		
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
@@ -128,13 +129,14 @@ public class Board extends JPanel implements MouseListener{
 			}
 			else if(players[randPlayer].getMyCards().size() < 3){
 				players[randPlayer].giveCard(cards[i]);
+				players[randPlayer].seeCard(cards[i]);
 				cards[i] = null;
 			}
 			else{
 				i--;
 			}
 		}
-		
+
 	}
 	
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
@@ -352,6 +354,7 @@ public class Board extends JPanel implements MouseListener{
 	}
 	public void calcTargets(int x, int y, int pathLength) {
 		targets.clear();
+		
 		Set<BoardCell> visited = new HashSet<BoardCell>();
 		visited.add(board[x][y]);
 		for (BoardCell c : adjMatrix.get(board[x][y])){
@@ -421,6 +424,7 @@ public class Board extends JPanel implements MouseListener{
 	public void nextPlayer() {
 		count++;
 		count = count % players.length;
+		//System.out.println(count);
 	}
 
 	public int getCount() {
@@ -443,6 +447,8 @@ public class Board extends JPanel implements MouseListener{
 				repaint();
 				turnOver = true;
 				count++;
+			//	System.out.println(count);
+				
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -450,28 +456,13 @@ public class Board extends JPanel implements MouseListener{
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void mouseExited(MouseEvent e) {}
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void mousePressed(MouseEvent e) {}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	public boolean containsClick(int mouseX, int mouseY, BoardCell cell) {
 		Rectangle rect = new Rectangle(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);
