@@ -9,9 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -83,6 +87,8 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	public boolean doTurn(Player player) {
 		board.setTurnOver(false);
+		board.setSuggestedCard(false);
+		
 		cg.guessField.setText("");
 		cg.resultField.setText("");
 
@@ -98,7 +104,7 @@ public class ClueGame extends JFrame implements MouseListener{
 
 			if (player.getClass() == HumanPlayer.class){			
 				board.calcTargets(row, col, cg.getRoll());
-				board.drawTargets(board.getGraphics());		
+				board.drawTargets(board.getGraphics());
 			}
 
 			if (player.getClass() == ComputerPlayer.class){
@@ -112,12 +118,11 @@ public class ClueGame extends JFrame implements MouseListener{
 
 					cg.guessField.setText(guess.person + ", " + guess.weapon + ", " + guess.room);
 					Card result = board.handleSuggestion(guess,player.getPlayerName(),picked);					
-					System.out.println(result.getName());
-
-					if (result.getName() != null){
+					
+					if (result != null){
 						player.seeCard(result);
 						cg.resultField.setText(result.getName());}
-					else cg.resultField.setText("No Response");
+					else {cg.resultField.setText("No Response");}
 				}
 				
 
@@ -133,6 +138,11 @@ public class ClueGame extends JFrame implements MouseListener{
 			JOptionPane.showMessageDialog(null, "You are Miss Scarlett, press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		}
 
+		if(board.isSuggestedCard()){
+			MakeSuggestionDialog msd = new MakeSuggestionDialog(board.getPlayers()[board.getCount()]);
+			msd.setVisible(true);
+		}
+		
 		return board.isTurnOver();
 	}
 
@@ -251,5 +261,106 @@ public class ClueGame extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 
 	}
+	
+	public class MakeSuggestionDialog extends JDialog{
+		
+		public MakeSuggestionDialog(Player player){
+			setLayout( new GridLayout(1,0));
+			JPanel guessPanel = createGuessPanel(player);
+			add(guessPanel);
+			setSize(300,300);
+		}
+		
+		private JPanel createGuessPanel(Player player){
+			JPanel guessPanel = new JPanel();
+			guessPanel.setLayout(new GridLayout(4,2));
+	
+
+			ArrayList<Card> roomCards = new ArrayList<Card>();
+			ArrayList<Card> weaponCards = new ArrayList<Card>();
+			ArrayList<Card> personCards = new ArrayList<Card>();
+
+			for ( Card card : board.getBackup()){
+				if (card.getType() == CardType.PERSON){
+					personCards.add(card);
+				}
+				if (card.getType() == CardType.WEAPON){
+					weaponCards.add(card);
+				}
+			}
+
+			JComboBox<String> weapons = new JComboBox<>();
+			JComboBox<String> persons = new JComboBox<>();
+
+			JTextField roomGuess;
+			roomGuess = new JTextField("Your Room ");
+			roomGuess.setEditable(false);
+			JTextField personGuess;
+			personGuess = new JTextField("Person ");
+			personGuess.setEditable(false);
+			JTextField weaponGuess;
+			weaponGuess = new JTextField("Weapon ");
+			weaponGuess.setEditable(false);
+			
+			
+			JTextField yourRoom;
+			BoardCell cell = new BoardCell(player.getRow(), player.getCol());
+			yourRoom = new JTextField(board.rooms.get(cell.getInitial()));
+			yourRoom.setEditable(false);
+			
+			for ( Card card : personCards){
+				persons.addItem(card.getName());
+			}
+
+			for ( Card card : weaponCards){
+				weapons.addItem(card.getName());
+			}
+			guessPanel.add(roomGuess);
+			guessPanel.add(yourRoom);
+			
+			guessPanel.add(personGuess);
+			guessPanel.add(persons);
+			
+			guessPanel.add(weaponGuess);
+			guessPanel.add(weapons);
+			
+			JButton submit = new JButton("Submit");
+			submit.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) {	
+					String person = (String) persons.getSelectedItem();
+					String weapon = (String) weapons.getSelectedItem();
+					String room = yourRoom.getText();
+					board.handleSuggestion(new Solution(person,weapon,room),player.getPlayerName(),new BoardCell(player.getRow(),player.getCol())).getName();
+					
+				}				
+
+			});
+
+
+			JButton cancel = new JButton("Cancel");
+			cancel.addActionListener(new ActionListener()
+			{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {	
+					dispose();
+				}				
+
+			});
+			
+
+			guessPanel.add(submit);
+
+			guessPanel.add(cancel);
+			return guessPanel;
+		}
+		
+	
+		
+	}
+	
+	
 
 }

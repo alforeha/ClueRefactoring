@@ -138,7 +138,7 @@ public class ControlGUI extends JPanel {
 				}
 				else{
 					if(game.doTurn(board.getPlayers()[game.board.getCount()])){
-						board.nextPlayer();
+						board.nextPlayer();						
 					}
 				}
 			}				

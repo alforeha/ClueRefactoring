@@ -3,8 +3,11 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -19,8 +22,15 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import java.lang.reflect.Field;
 
@@ -42,6 +52,17 @@ public class Board extends JPanel implements MouseListener{
 	public 	ArrayList<Card> backup = new ArrayList<Card>();
 	public Solution solution;
 	private boolean turnOver = true;
+	private boolean suggestedCard;
+
+	
+
+	public boolean isSuggestedCard() {
+		return suggestedCard;
+	}
+
+	public void setSuggestedCard(boolean suggestedCard) {
+		this.suggestedCard = suggestedCard;
+	}
 
 	public boolean isTurnOver() {
 		return turnOver;
@@ -442,17 +463,21 @@ public class Board extends JPanel implements MouseListener{
 			for (BoardCell cell : targets){
 
 				if (containsClick(e.getX(),e.getY(), cell)){
-					whichCell = cell;
+					whichCell = cell;					
+					
 					break;
 				}
 			}
 			if (whichCell != null){
 				players[count].setLocation(whichCell);
 				repaint();
+			if (whichCell.isDoorway()){
+					setSuggestedCard(true);
+
+				}
 				turnOver = true;
 				count++;
-			//	System.out.println(count);
-				
+							
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -481,4 +506,5 @@ public class Board extends JPanel implements MouseListener{
 	public void setCount(int i) {
 		count = i;	
 	}
+		
 }
