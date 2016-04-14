@@ -139,6 +139,10 @@ public class Board extends JPanel implements MouseListener{
 
 	}
 	
+	public Solution getSolution() {
+		return solution;
+	}
+
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
 		int startIndex = 0;
 		for(int i = 0; i < 6; i++){

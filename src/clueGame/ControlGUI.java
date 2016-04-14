@@ -22,6 +22,8 @@ public class ControlGUI extends JPanel {
 	private JTextField name;
 	public JTextField rollField;
 	public JTextField nameField;
+	public JTextField guessField;
+	public JTextField resultField;
 	private ClueGame game;
 	private String playerName;	
 	private int roll;
@@ -101,10 +103,10 @@ public class ControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		//panel.setLayout(new GridLayout(2,2));
 		JLabel nameLabel = new JLabel("Guess");
-		name = new JTextField(20);
-		name.setEditable(false);
+		guessField = new JTextField(20);
+		guessField.setEditable(false);
 		panel.add(nameLabel);
-		panel.add(name);
+		panel.add(guessField);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		return panel;
 	}
@@ -114,11 +116,11 @@ public class ControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		//panel.setLayout(new GridLayout(2,3));
 		JLabel nameLabel = new JLabel("Response");
-		name = new JTextField(20);
-		name.setEditable(false);
+		resultField = new JTextField(20);
+		resultField.setEditable(false);
 		//name.add("Hello");
 		panel.add(nameLabel);
-		panel.add(name);
+		panel.add(resultField);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		return panel;
 	}

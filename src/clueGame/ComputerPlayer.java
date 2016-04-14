@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player{
+	
+	
 	public ComputerPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
 	}
@@ -41,15 +43,13 @@ public class ComputerPlayer extends Player{
 		
 		ArrayList<Card> guessablePeople = new ArrayList<Card>();
 		ArrayList<Card> guessableWeapons = new ArrayList<Card>();
+	
 		
-		for(Card c : board.getCards()){
-			
-			
+		for(Card c : board.getBackup()){			
 			boolean hasBeenSeen = false;
-			System.out.println(seenCards.size());
+						
 			for(Card seen : seenCards){
-				System.out.println(seen.getName());
-			
+				
 				if(seen.getName().equals(c.getName()))
 					hasBeenSeen = true;
 			}
@@ -60,14 +60,14 @@ public class ComputerPlayer extends Player{
 				else if(c.getType().equals(CardType.WEAPON))
 					guessableWeapons.add(c);
 			}
-		}
+		}		
 		
 		int i = 0;
 		Random rand = new Random();
 		int r = rand.nextInt(guessablePeople.size());
 		for(Card c : guessablePeople){
 			if (i == r)
-				guess.person = c.getName();
+				guess.setPerson(c.getName());
 			i++;
 		}
 		
@@ -75,7 +75,7 @@ public class ComputerPlayer extends Player{
 		r = rand.nextInt(guessableWeapons.size());
 		for(Card c : guessableWeapons){
 			if (i == r)
-				guess.weapon = c.getName();
+				guess.setWeapon(c.getName());
 			i++;
 		}
 		

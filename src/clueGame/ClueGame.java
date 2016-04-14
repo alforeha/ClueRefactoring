@@ -46,7 +46,7 @@ public class ClueGame extends JFrame implements MouseListener{
 		board = new Board();
 		board.initialize();
 		addMouseListener(this);
-		setSize(1300, 860);
+		setSize(1300, 900);
 		add(board, BorderLayout.CENTER);
 		cg = new ControlGUI(this);
 		cg.setSize(300, 840);
@@ -54,6 +54,16 @@ public class ClueGame extends JFrame implements MouseListener{
 		d = new DetectiveNotes();
 		d.setSize(700, 400);
 		add(addMyCards(), BorderLayout.EAST);
+		System.out.println(board.getSolution().getPerson() + " " + board.getSolution().getWeapon() + "  " + board.getSolution().getRoom());
+
+		for (Player player : board.getPlayers()){
+			System.out.println(player.getPlayerName());
+			for (Card card : player.getMyCards()){
+				System.out.println(card.getName());
+			}
+			System.out.println();
+		}
+
 	}
 
 	public static void main(String [] args){
@@ -73,6 +83,9 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	public boolean doTurn(Player player) {
 		board.setTurnOver(false);
+		cg.guessField.setText("");
+		cg.resultField.setText("");
+
 		if(!board.isTurnOver()){
 			String playerName = player.getPlayerName();
 			int row = player.getRow();
@@ -89,29 +102,30 @@ public class ClueGame extends JFrame implements MouseListener{
 			}
 
 			if (player.getClass() == ComputerPlayer.class){
+				board.calcTargets(row, col, cg.getRoll());				
 
+				BoardCell picked = ((ComputerPlayer) player).pickLocation(board.getTargets());
+				board.repaint();
 
-				board.calcTargets(row, col, cg.getRoll());
-				
-				if (player.getPlayerName() == "Professor Periwinkle"){
-					System.out.println("wtf");
+				if (picked.isDoorway()){
+					Solution guess = ((ComputerPlayer) player).makeSuggestion(board, picked);
+
+					cg.guessField.setText(guess.person + ", " + guess.weapon + ", " + guess.room);
+					Card result = board.handleSuggestion(guess,player.getPlayerName(),picked);					
+					System.out.println(result.getName());
+
+					if (result.getName() != null){
+						player.seeCard(result);
+						cg.resultField.setText(result.getName());}
+					else cg.resultField.setText("No Response");
 				}
+				
 
-				
-				
-				((ComputerPlayer) player).pickLocation(board.getTargets());
-				
-			//	if (picked.isDoorway() && picked !=null){
-				//	System.out.println(picked.getType());
-			//		Solution guess = ((ComputerPlayer) player).makeSuggestion(board, picked);
-			//		player.seeCard(board.handleSuggestion(guess,player.getPlayerName(),picked));
-			//	}
-				
 				if(player.getSeenCards().size() == board.getBackup().size()-3){
 					((ComputerPlayer) player).makeAccusation();
 				}
-				
-				board.repaint();
+
+
 				board.setTurnOver(true);
 			}
 		}
@@ -225,7 +239,7 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+
 	}
 
 	public Board getBoard() {
