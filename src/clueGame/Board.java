@@ -442,6 +442,7 @@ public class Board extends JPanel implements MouseListener{
 				players[count].setLocation(whichCell);
 				repaint();
 				turnOver = true;
+				count++;
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -480,5 +481,9 @@ public class Board extends JPanel implements MouseListener{
 		if (rect.contains(new Point(mouseX, mouseY))) 
 			return true;
 		return false;
+	}
+
+	public void setCount(int i) {
+		count = i;	
 	}
 }

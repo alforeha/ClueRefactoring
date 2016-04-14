@@ -134,8 +134,11 @@ public class ControlGUI extends JPanel {
 				if(!game.board.isTurnOver()){
 					JOptionPane.showMessageDialog(null, "Please finish your turn", "You're not done!", JOptionPane.ERROR_MESSAGE);
 				}
-				else if(game.doTurn(board.getPlayers()[game.board.getCount()]))
-					board.nextPlayer();
+				else{
+					if(game.doTurn(board.getPlayers()[game.board.getCount()])){
+						//board.nextPlayer();
+					}
+				}
 			}				
 
 		});

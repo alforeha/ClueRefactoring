@@ -90,19 +90,20 @@ public class ClueGame extends JFrame implements MouseListener{
 
 			if (player.getClass() == ComputerPlayer.class){
 
-				ComputerPlayer playerTurn = new ComputerPlayer(playerName,row,col,color);
+				//ComputerPlayer playerTurn = new ComputerPlayer(playerName,row,col,color);
 
 				board.calcTargets(row, col, cg.getRoll());
-
-				if(playerTurn.getSeenCards().size() == board.getBackup().size()-3){
-					playerTurn.makeAccusation();
+				
+				if(player.getSeenCards().size() == board.getBackup().size()-3){
+					((ComputerPlayer) player).makeAccusation();
 				}
 
-				BoardCell picked = playerTurn.pickLocation(board.getTargets());
+				BoardCell picked = ((ComputerPlayer) player).pickLocation(board.getTargets());
 				if (picked.isDoorway()){
-					Solution guess = playerTurn.makeSuggestion(board, picked);
-					playerTurn.seeCard(board.handleSuggestion(guess,playerTurn.getPlayerName(),picked));
+					Solution guess = ((ComputerPlayer) player).makeSuggestion(board, picked);
+					player.seeCard(board.handleSuggestion(guess,player.getPlayerName(),picked));
 				}
+				board.repaint();
 				board.setTurnOver(true);
 			}
 		}
@@ -216,23 +217,7 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		//		if(board.getNumColumns()*BoardCell.CELL_WIDTH > arg0.getX() && board.getNumRows()*BoardCell.CELL_HEIGHT > arg0.getY()){
-		//			BoardCell whichCell = null;
-		//			for (BoardCell cell : board.getTargets()){
-		//
-		//				if (containsClick(arg0.getX()-6,arg0.getY()-BoardCell.CELL_HEIGHT-20, cell)){
-		//					whichCell = cell;
-		//					break;
-		//				}
-		//			}
-		//			if (whichCell != null){
-		//				board.getPlayers()[board.getCount()].setLocation(whichCell);
-		//				repaint();
-		//				ifDone = true;
-		//			}
-		//			else
-		//				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
-		//		}
+		
 	}
 
 	public Board getBoard() {
@@ -245,13 +230,4 @@ public class ClueGame extends JFrame implements MouseListener{
 
 	}
 
-	//	public boolean containsClick(int mouseX, int mouseY, BoardCell cell) {
-	//		Rectangle rect = new Rectangle(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);
-	//		board.getGraphics().setColor(Color.BLACK);
-	//		board.getGraphics().drawRect(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);
-	//		Rectangle bounds = board.getBounds();
-	//		if (rect.contains(new Point(mouseX, mouseY))) 
-	//			return true;
-	//		return false;
-	//	}
 }

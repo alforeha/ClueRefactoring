@@ -21,8 +21,9 @@ public class ComputerPlayer extends Player{
 		int j = rand.nextInt(targets.size());
 		
 		for (BoardCell b : targets){
-			if (i == j)
-				return b;
+			if (i == j){
+				setLocation(b);
+				return b;}
 			i++;
 		}
 		
