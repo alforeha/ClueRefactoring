@@ -3,6 +3,10 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -15,13 +19,14 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.lang.reflect.Field;
 
 
 
-public class Board extends JPanel{
+public class Board extends JPanel implements MouseListener{
 	private int numRows, numColumns;
 	private int numDoors = 0;
 	public static final int BOARD_SIZE = 50;
@@ -36,6 +41,15 @@ public class Board extends JPanel{
 	private Card[] cards;
 	public 	ArrayList<Card> backup = new ArrayList<Card>();
 	public Solution solution;
+	private boolean turnOver = true;
+
+	public boolean isTurnOver() {
+		return turnOver;
+	}
+
+	public void setTurnOver(boolean turnOver) {
+		this.turnOver = turnOver;
+	}
 
 	public ArrayList<Card> getBackup() {
 		return backup;
@@ -61,9 +75,6 @@ public class Board extends JPanel{
 	
 	}
 	
-	
-	
-	
 	public Board(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
@@ -81,6 +92,7 @@ public class Board extends JPanel{
 			loadBoardConfig();
 			loadPlayers();
 			loadCards();
+			addMouseListener(this);
 		} catch (FileNotFoundException e) {
 			System.out.println("Error loading config file " + e);
 		} catch (BadConfigFormatException e) {
@@ -415,4 +427,58 @@ public class Board extends JPanel{
 		return count;
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(numColumns*BoardCell.CELL_WIDTH > e.getX() && numRows*BoardCell.CELL_HEIGHT > e.getY() && !turnOver){
+			BoardCell whichCell = null;
+			for (BoardCell cell : targets){
+
+				if (containsClick(e.getX(),e.getY(), cell)){
+					whichCell = cell;
+					break;
+				}
+			}
+			if (whichCell != null){
+				players[count].setLocation(whichCell);
+				repaint();
+				turnOver = true;
+			}
+			else
+				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean containsClick(int mouseX, int mouseY, BoardCell cell) {
+		Rectangle rect = new Rectangle(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);
+		getGraphics().setColor(Color.BLACK);
+		getGraphics().drawRect(cell.CELL_WIDTH*cell.getColumn(), cell.CELL_HEIGHT*cell.getRow(), cell.CELL_WIDTH, cell.CELL_HEIGHT);
+		//Rectangle bounds = board.getBounds();
+		if (rect.contains(new Point(mouseX, mouseY))) 
+			return true;
+		return false;
+	}
 }

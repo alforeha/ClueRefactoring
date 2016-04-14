@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -130,7 +131,10 @@ public class ControlGUI extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-				if(game.doTurn(board.getPlayers()[game.board.getCount()]))
+				if(!game.board.isTurnOver()){
+					JOptionPane.showMessageDialog(null, "Please finish your turn", "You're not done!", JOptionPane.ERROR_MESSAGE);
+				}
+				else if(game.doTurn(board.getPlayers()[game.board.getCount()]))
 					board.nextPlayer();
 			}				
 
