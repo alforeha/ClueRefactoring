@@ -53,8 +53,18 @@ public class Board extends JPanel implements MouseListener{
 	public Solution solution;
 	private boolean turnOver = true;
 	private boolean suggestedCard;
+	private MakeSuggestionDialog msd;
+	public ControlGUI cg;
 
 	
+
+	public ControlGUI getCg() {
+		return cg;
+	}
+
+	public void setCg(ControlGUI cg) {
+		this.cg = cg;
+	}
 
 	public boolean isSuggestedCard() {
 		return suggestedCard;
@@ -114,6 +124,7 @@ public class Board extends JPanel implements MouseListener{
 			loadPlayers();
 			loadCards();
 			addMouseListener(this);
+			msd = new MakeSuggestionDialog(this, cg);
 		} catch (FileNotFoundException e) {
 			System.out.println("Error loading config file " + e);
 		} catch (BadConfigFormatException e) {
@@ -171,6 +182,11 @@ public class Board extends JPanel implements MouseListener{
 				startIndex = i;
 				break;
 			}
+		}
+		
+		for (Player player: players){
+			if (player.getPlayerName().equals(suggestion.person))
+				player.setLocation(clicked);
 		}
 		
 		Card answer = null;
@@ -446,7 +462,11 @@ public class Board extends JPanel implements MouseListener{
 		return numDoors;
 	}
 
-	public void nextPlayer() {
+	public void nextPlayer(ClueGame game) {
+		if(isSuggestedCard()){
+			MakeSuggestionDialog msd = new MakeSuggestionDialog(game);
+			msd.setVisible(true);
+		}		
 		count++;
 		count = count % players.length;
 		//System.out.println(count);
@@ -458,6 +478,7 @@ public class Board extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		setSuggestedCard(false);
 		if(numColumns*BoardCell.CELL_WIDTH > e.getX() && numRows*BoardCell.CELL_HEIGHT > e.getY() && !turnOver){
 			BoardCell whichCell = null;
 			for (BoardCell cell : targets){
@@ -473,7 +494,10 @@ public class Board extends JPanel implements MouseListener{
 				repaint();
 			if (whichCell.isDoorway()){
 					setSuggestedCard(true);
-
+					msd = new MakeSuggestionDialog(this, cg);
+					
+					msd.setVisible(true);
+					msd.setModal(true);
 				}
 				turnOver = true;
 				count++;
@@ -482,6 +506,10 @@ public class Board extends JPanel implements MouseListener{
 			else
 				JOptionPane.showMessageDialog(null, "Select a valid target", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public MakeSuggestionDialog getMsd() {
+		return msd;
 	}
 
 	@Override
