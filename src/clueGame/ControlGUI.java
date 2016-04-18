@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +36,7 @@ public class ControlGUI extends JPanel {
 	private JPanel guessPanel;
 	private JPanel resultPanel;
 	
+	public MakeAccusationDialog mad;
 	public MakeSuggestionDialog msd;
 
 	public void setPlayerName(String playerName) {
@@ -57,7 +59,8 @@ public class ControlGUI extends JPanel {
 		setLayout(new GridLayout(5,0));
 		JPanel panel = createButtonPanel(game.board);
 
-		msd = new MakeSuggestionDialog(game);
+		mad = new MakeAccusationDialog(game.board);
+		msd = new MakeSuggestionDialog(game.board, this);
 		
 		whoseTurnPanel = createWhosTurnPanel();
 
@@ -144,7 +147,7 @@ public class ControlGUI extends JPanel {
 				}
 				else{
 					if(game.doTurn(board.getPlayers()[game.board.getCount()])){
-						board.nextPlayer(game);						
+						board.nextPlayer();						
 					}
 				}
 				
@@ -154,6 +157,27 @@ public class ControlGUI extends JPanel {
 
 
 		JButton disagree = new JButton("Make An Accusation");
+		disagree.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				if(game.board.getCount() != 0){
+					JOptionPane.showMessageDialog(null, "It's not your turn!", "You must wait your turn!", JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+					mad.setVisible(true);
+					//mad.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+					//mad.setModal(true);
+					//while(msd.getPersonString().equals("")){
+					//}
+					
+				}
+				
+			}				
+
+		});
+		
 		JPanel panel = new JPanel();
 		//panel.setLayout(new GridLayout(1, 2));
 		panel.add(agree);
@@ -171,166 +195,6 @@ public class ControlGUI extends JPanel {
 
 	}
 
-	public class MakeSuggestionDialog extends JDialog{
-		
-		private String personString;
-		private String weaponString;
-		private String roomString;
-		private String result;
-		
-		private Board board;;
-
-		
-		public MakeSuggestionDialog(ClueGame clueGame){
-			setLayout( new GridLayout(1,0));
-			board= clueGame.getBoard();
-			JPanel guessPanel = createGuessPanel(board.getPlayers()[board.getCount()]);
-			add(guessPanel);
-			setSize(300,300);
-		}
-		
-		public MakeSuggestionDialog(Board board){
-			setLayout( new GridLayout(1,0));
-			this.board = board;
-			JPanel guessPanel = createGuessPanel(board.getPlayers()[board.getCount()]);
-			add(guessPanel);
-			setSize(300,300);
-		}
-			
-		
-		public String getResult() {
-			return result;
-		}
-
-		public void setResult(String result) {
-			this.result = result;
-		}
-
-		public String getPersonString() {
-			return personString;
-		}
-
-		public void setPersonString(String personString) {
-			this.personString = personString;
-		}
-
-		public String getWeaponString() {
-			return weaponString;
-		}
-
-		public void setWeaponString(String weaponString) {
-			this.weaponString = weaponString;
-		}
-
-		public String getRoomString() {
-			return roomString;
-		}
-
-		public void setRoomString(String roomString) {
-			this.roomString = roomString;
-		}
-
-
-		
-
-		
-		private JPanel createGuessPanel(Player player){
-			JPanel guessPanel = new JPanel();
-			guessPanel.setLayout(new GridLayout(4,2));
-
-			ArrayList<Card> weaponCards = new ArrayList<Card>();
-			ArrayList<Card> personCards = new ArrayList<Card>();
-
-			for ( Card card : board.getBackup()){
-				if (card.getType() == CardType.PERSON){
-					personCards.add(card);
-				}
-				if (card.getType() == CardType.WEAPON){
-					weaponCards.add(card);
-				}
-			}
-
-			JComboBox<String> weapons = new JComboBox<>();
-			JComboBox<String> persons = new JComboBox<>();
-
-			JTextField roomGuess;
-			roomGuess = new JTextField("Your Room ");
-			roomGuess.setEditable(false);
-			JTextField personGuess;
-			personGuess = new JTextField("Person ");
-			personGuess.setEditable(false);
-			JTextField weaponGuess;
-			weaponGuess = new JTextField("Weapon ");
-			weaponGuess.setEditable(false);
-			
-			
-			JTextField yourRoom;
-			BoardCell cell = new BoardCell(player.getRow(), player.getCol());
-			yourRoom = new JTextField(Board.rooms.get(cell.getInitial()));
-			yourRoom.setEditable(false);
-			
-			for ( Card card : personCards){
-				persons.addItem(card.getName());
-			}
-
-			for ( Card card : weaponCards){
-				weapons.addItem(card.getName());
-			}
-			guessPanel.add(roomGuess);
-			guessPanel.add(yourRoom);
-			
-			guessPanel.add(personGuess);
-			guessPanel.add(persons);
-			
-			guessPanel.add(weaponGuess);
-			guessPanel.add(weapons);
-			
-			JButton submit = new JButton("Submit");
-			submit.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e) {	
-								
-					String person = (String) persons.getSelectedItem();
-					setPersonString(person);
-					String weapon = (String) weapons.getSelectedItem();
-					setWeaponString(weapon);
-					String room = yourRoom.getText();
-					setRoomString(room);
-					Card result = board.handleSuggestion(new Solution(person,weapon,room),player.getPlayerName(),new BoardCell(player.getRow(),player.getCol()));
-					if (result != null){
-						player.seeCard(result);
-						board.setSuggestedCard(true);
-						setResult(result.getName());
-						dispose();
-					}
-					else {setResult("No Response");
-					dispose();
-					}
-					
-				}				
-
-			});
-
-
-			JButton cancel = new JButton("Cancel");
-			cancel.addActionListener(new ActionListener()
-			{
-
-				@Override
-				public void actionPerformed(ActionEvent e) {	
-					dispose();
-				}				
-
-			});
-			
-
-			guessPanel.add(submit);
-
-			guessPanel.add(cancel);
-			return guessPanel;
-		}
-		
-	}
+	
 
 }

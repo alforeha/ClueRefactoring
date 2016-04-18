@@ -57,10 +57,10 @@ public class ClueGame extends JFrame{
 		add(cg, BorderLayout.SOUTH);
 		d = new DetectiveNotes();
 		d.setSize(700, 400);
-		msd = board.getMsd();
+		//msd = board.getMsd();
 		
 		add(addMyCards(), BorderLayout.EAST);
-	//	System.out.println(board.getSolution().getPerson() + " " + board.getSolution().getWeapon() + "  " + board.getSolution().getRoom());
+		System.out.println(board.getSolution().getPerson() + " " + board.getSolution().getWeapon() + " " + board.getSolution().getRoom());
 
 	/*	for (Player player : board.getPlayers()){
 			System.out.println(player.getPlayerName());
@@ -108,14 +108,15 @@ public class ClueGame extends JFrame{
 			
 			if (player.getClass() == HumanPlayer.class){			
 				board.calcTargets(row, col, cg.getRoll());
-				board.drawTargets(board.getGraphics());
-				
+				board.drawTargets(board.getGraphics());				
 				
 				board.getMsd().setModal(true);
+				
 				board.setCg(cg);
+				if(msd != null){
 				cg.resultField.setText(msd.getResult());
 				cg.guessField.setText(board.getMsd().getPersonString() + ", " + board.getMsd().getWeaponString() + ", " + board.getMsd().getRoomString());
-				cg.repaint();
+				cg.repaint();}
 								
 			}
 
@@ -138,8 +139,10 @@ public class ClueGame extends JFrame{
 				}
 				
 
-				if(player.getSeenCards().size() == board.getBackup().size()-3){
-					((ComputerPlayer) player).makeAccusation();
+				if(player.getSeenCards().size() == board.getBackup().size()-ComputerPlayer.NUM_CARDS_IN_SOLUTION){
+					Solution accusation = ((ComputerPlayer) player).makeAccusation(board);
+					JOptionPane.showMessageDialog(null, "It was " + accusation.person
+					+ " with the " + accusation.weapon + " in the " + accusation.room + "!", player.getPlayerName() + " wins...", JOptionPane.INFORMATION_MESSAGE);
 				}
 
 

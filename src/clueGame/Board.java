@@ -462,11 +462,7 @@ public class Board extends JPanel implements MouseListener{
 		return numDoors;
 	}
 
-	public void nextPlayer(ClueGame game) {
-		if(isSuggestedCard()){
-			MakeSuggestionDialog msd = new MakeSuggestionDialog(game);
-			msd.setVisible(true);
-		}		
+	public void nextPlayer() {		
 		count++;
 		count = count % players.length;
 		//System.out.println(count);

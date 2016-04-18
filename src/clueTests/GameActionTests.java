@@ -173,24 +173,17 @@ public class GameActionTests {
 		ComputerPlayer player = new ComputerPlayer("Jeff", 14, 0, null);
 		board.calcTargets(14, 0, 1);
 		boolean loc_13_0 = false;
-		boolean loc_15_0 = false;
-		boolean loc_14_1 = false;
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
 			if (selected == board.getCellAt(13, 0))
 				loc_13_0 = true;
-			else if (selected == board.getCellAt(15, 0))
-				loc_15_0 = true;
-			else if (selected == board.getCellAt(14, 1))
-				loc_14_1 = true;
 			else
 				fail("Invalid target selected");
 		}
 		// Ensure each target was selected at least once
 		assertTrue(loc_13_0);
-		assertFalse(loc_15_0);
-		assertFalse(loc_14_1);	
+
 	}
 	
 	

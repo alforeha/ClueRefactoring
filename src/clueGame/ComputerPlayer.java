@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player{
-	
+	public final static int NUM_CARDS_IN_SOLUTION = 3;
 	
 	public ComputerPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
@@ -34,8 +34,58 @@ public class ComputerPlayer extends Player{
 		return null;
 	}
 	
-	public void makeAccusation(){
+	public Solution makeAccusation(Board board){
+		Solution accusation = new Solution("","","");
+		ArrayList<Card> guessablePeople = new ArrayList<Card>();
+		ArrayList<Card> guessableWeapons = new ArrayList<Card>();
+		ArrayList<Card> guessableRooms = new ArrayList<Card>();
+	
 		
+		for(Card c : board.getBackup()){			
+			boolean hasBeenSeen = false;
+						
+			for(Card seen : seenCards){
+				
+				if(seen.getName().equals(c.getName()))
+					hasBeenSeen = true;
+			}
+			
+			if(!hasBeenSeen){				
+				if(c.getType().equals(CardType.PERSON))
+					guessablePeople.add(c);
+				if(c.getType().equals(CardType.WEAPON))
+					guessableWeapons.add(c);
+				if(c.getType().equals(CardType.ROOM))
+					guessableRooms.add(c);
+			}
+		}		
+		
+		int i = 0;
+		Random rand = new Random();
+		int r = rand.nextInt(guessablePeople.size());
+		for(Card c : guessablePeople){
+			if (i == r)
+				accusation.setPerson(c.getName());
+			i++;
+		}
+		
+		i = 0;
+		r = rand.nextInt(guessableWeapons.size());
+		for(Card c : guessableWeapons){
+			if (i == r)
+				accusation.setWeapon(c.getName());
+			i++;
+		}
+		
+		i = 0;
+		r = rand.nextInt(guessableRooms.size());
+		for(Card c : guessableRooms){
+			if (i == r)
+				accusation.setRoom(c.getName());
+			i++;
+		}
+		
+		return accusation;
 	}
 	
 	public Solution makeSuggestion(Board board, BoardCell location){
